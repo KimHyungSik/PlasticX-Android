@@ -44,11 +44,7 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
                 if (error != null) {
                     if (error is KakaoSdkError && error.isInvalidTokenError() == true) {
                         //로그인 필요
-                        val intent = Intent(this, LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                                Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
+                        moveIntentAllClear(LoginActivity::class.java)
                     }
                     else {
                         //기타 에러
@@ -56,16 +52,20 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
                 }
                 else {
                     //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
-
                 }
             }
         }else{
             //로그인 필요
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                    Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
+            moveIntentAllClear(LoginActivity::class.java)
         }
     }
+
+    private fun moveIntentAllClear(activity: Class<*>) {
+        val intent = Intent(this, activity)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
 }

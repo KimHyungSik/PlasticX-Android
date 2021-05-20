@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.example.plasticx.databinding.ActivityRegistrationBinding
 
 class RegistrationActivity : AppCompatActivity() {
-    lateinit var binding: ActivityRegistrationBinding
+    private lateinit var binding: ActivityRegistrationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)

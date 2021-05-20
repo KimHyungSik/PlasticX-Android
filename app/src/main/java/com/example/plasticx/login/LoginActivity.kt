@@ -2,12 +2,8 @@ package com.example.plasticx.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
-import com.example.plasticx.base.BaseActivity
 import com.example.plasticx.databinding.ActivityLoginBinding
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.registration.RegistrationActivity
@@ -16,7 +12,7 @@ import com.kakao.sdk.user.UserApiClient
 
 class LoginActivity : AppCompatActivity() {
 
-    val TAG = "LoginActivity - 로그"
+    private val TAG = "LoginActivity - 로그"
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             if(binding.loginPasswordText.text?.length!! == 0){
                 binding.loginPasswordLayout.error = "비밀번호를 입력해주세요."
             }else{
-                binding.loginPasswordLayout.error = ""
+                binding.logindEmailLayout.error = ""
             }
         }
 
