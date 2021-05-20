@@ -10,36 +10,39 @@
     android:paddingHorizontal="56dp"
     >
 
-   <ImageView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:src="@drawable/logo_size"
-       />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/main_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/logind_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="아이디"
+        android:hint="이메일"
+        android:paddingBottom="8dp"
         android:layout_marginBottom="12dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_text"
+            android:id="@+id/login_email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_password_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconMode="password_toggle"
         android:hint="비밀번호"
+        android:paddingBottom="8dp"
         android:layout_marginBottom="2dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_text"
+            android:id="@+id/login_password_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"

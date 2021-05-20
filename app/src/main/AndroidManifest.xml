@@ -2,22 +2,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.plasticx">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo_size"
+        android:icon="@drawable/logo_icon_invert"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_icon_invert"
         android:supportsRtl="true"
         android:theme="@style/Theme.PlasticX">
-        <activity android:name=".registration.RegistrationActivity"></activity>
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".loading.IntroLoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".registration.RegistrationActivity" />
+        <activity android:name=".login.LoginActivity"/>
+        <activity android:name=".main.MainActivity" />
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao14dfda0db277f4872199681e72a4155c" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
