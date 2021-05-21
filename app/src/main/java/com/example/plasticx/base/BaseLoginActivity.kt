@@ -11,9 +11,10 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
 
-abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
+abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
+
     private var lastTimeBackPressed : Long = 0
 
     @Suppress("UNCHECKED_CAST")
@@ -25,7 +26,6 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
 
-        kakoTokenAccess()
         setup()
     }
 
@@ -36,31 +36,6 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         _binding = null
     }
 
-    // 로그인 상태가 아니라면 로그인 페지로 이동
-    fun kakoTokenAccess(){
-        if(this == LoginActivity::class.java) return
-
-        if (AuthApiClient.instance.hasToken()) {
-            UserApiClient.instance.accessTokenInfo { _, error ->
-                if (error != null) {
-                    if (error is KakaoSdkError && error.isInvalidTokenError() == true) {
-                        //로그인 필요
-                        moveIntentAllClear(LoginActivity::class.java)
-                    }
-                    else {
-                        //기타 에러
-                    }
-                }
-                else {
-                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
-                }
-            }
-        }else{
-            //로그인 필요
-            moveIntentAllClear(LoginActivity::class.java)
-        }
-    }
-
     private fun moveIntentAllClear(activity: Class<*>) {
         val intent = Intent(this, activity)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -68,6 +43,7 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
                 Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
+
 
     override fun onBackPressed() {
         if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
@@ -79,3 +55,4 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     }
 
 }
+

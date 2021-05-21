@@ -3,26 +3,26 @@ package com.example.plasticx.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.example.plasticx.base.BaseLoginActivity
 import com.example.plasticx.databinding.ActivityLoginBinding
+import com.example.plasticx.databinding.ActivityMainBinding
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.registration.RegistrationActivity
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
 
     private val TAG = "LoginActivity - 로그"
-    private lateinit var binding: ActivityLoginBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding
+            = ActivityLoginBinding::inflate
 
+    override fun setup() {
         setupViews()
     }
-
 
     private fun setupViews(){
         binding.singupBtn.setOnClickListener {

@@ -9,6 +9,7 @@ import com.example.plasticx.R
 import com.example.plasticx.base.BaseActivity
 import com.example.plasticx.databinding.ActivityLoginBinding
 import com.example.plasticx.databinding.ActivityMainBinding
+import com.example.plasticx.loading.LottieLoadingDialog
 import com.example.plasticx.login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
 
@@ -21,6 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun setup() {
         setupViews()
+        LottieLoadingDialog(this).show()
     }
 
     private fun setupViews(){
