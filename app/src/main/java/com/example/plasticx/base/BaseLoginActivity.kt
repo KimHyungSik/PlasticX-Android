@@ -36,11 +36,16 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
         _binding = null
     }
 
-    private fun moveIntentAllClear(activity: Class<*>) {
+    open fun moveIntentAllClear(activity: Class<*>) {
         val intent = Intent(this, activity)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or
                 Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    open fun moveIntent(activity: Class<*>) {
+        val intent = Intent(this, activity)
         startActivity(intent)
     }
 

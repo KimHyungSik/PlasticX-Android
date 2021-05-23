@@ -62,8 +62,9 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.28.3'             // dagger
     kapt 'com.google.dagger:dagger-compiler:2.27'                // dagger
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'           // corouㄹtine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'           // coroutine
 
+    implementation 'com.budiyev.android:code-scanner:2.1.0'      // qrCode
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -11,6 +11,7 @@ import com.example.plasticx.databinding.ActivityLoginBinding
 import com.example.plasticx.databinding.ActivityMainBinding
 import com.example.plasticx.loading.LottieLoadingDialog
 import com.example.plasticx.login.LoginActivity
+import com.example.plasticx.qr.QrActivity
 import com.kakao.sdk.user.UserApiClient
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -32,13 +33,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
                 else {
                     Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
+                    moveIntentAllClear(LoginActivity::class.java)
                 }
             }
+        }
+
+        binding.mainBottomFab.setOnClickListener {
+            moveIntent(QrActivity::class.java)
         }
     }
 }
