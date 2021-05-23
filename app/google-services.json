@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "81183687067",
+    "project_id": "plasticx-85230",
+    "storage_bucket": "plasticx-85230.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81183687067:android:7c7fbc3dc6df9fc11be13e",
+        "android_client_info": {
+          "package_name": "com.example.plasticx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81183687067-ld69lf176rgdqpinan8iku9i0b26d59f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfbBLi114LVRQh9GmW-niuVAoRJc-9bhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81183687067-ld69lf176rgdqpinan8iku9i0b26d59f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

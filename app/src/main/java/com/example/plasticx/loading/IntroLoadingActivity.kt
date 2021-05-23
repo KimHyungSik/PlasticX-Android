@@ -1,17 +1,23 @@
 package com.example.plasticx.loading
 
 import android.Manifest
+import android.app.NotificationManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.plasticx.databinding.ActivityIntroLoadingBinding
+import com.example.plasticx.firebase.MyFirebaseMessagingService
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
+import com.example.plasticx.utils.CreateNotificationChannel
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -31,8 +37,17 @@ class IntroLoadingActivity : AppCompatActivity() {
         binding = ActivityIntroLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //채널 생성
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //알람 채널 생성 매니저
+            CreateNotificationChannel().createNotificationChannel(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+        }
+
         GlobalScope.launch {
             delay(900)
+            MyFirebaseMessagingService().getToken{
+                Log.d(TAG, "onCreate: $it")
+            }
             permissions()
         }
     }
