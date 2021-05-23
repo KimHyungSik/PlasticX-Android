@@ -8,19 +8,27 @@ import com.example.plasticx.databinding.ActivityIntroLoadingBinding
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
 import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class IntroLoadingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityIntroLoadingBinding
     private val TAG = "IntroLoadingActivity - 로그"
 
+    @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIntroLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        kakoTokenAccess()
+
+        GlobalScope.launch {
+            delay(900)
+            kakoTokenAccess()
+        }
     }
 
     private fun kakoTokenAccess(){

@@ -22,7 +22,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun setup() {
         setupViews()
-        LottieLoadingDialog(this).show()
     }
 
     private fun setupViews(){
