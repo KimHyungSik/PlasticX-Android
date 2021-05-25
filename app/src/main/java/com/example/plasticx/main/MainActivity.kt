@@ -1,18 +1,14 @@
 package com.example.plasticx.main
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.example.plasticx.R
 import com.example.plasticx.base.BaseActivity
-import com.example.plasticx.databinding.ActivityLoginBinding
 import com.example.plasticx.databinding.ActivityMainBinding
-import com.example.plasticx.loading.LottieLoadingDialog
-import com.example.plasticx.login.LoginActivity
+import com.example.plasticx.main.listfragment.TumblrListFragment
 import com.example.plasticx.qr.QrActivity
-import com.kakao.sdk.user.UserApiClient
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -23,23 +19,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun setup() {
         setupViews()
+        binding.bottomNavigationView.background = null
+        // 가운데 비우기 위한 아이템 비활성화
+        binding.bottomNavigationView.menu.getItem(2).isEnabled = false
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<TumblrListFragment>(R.id.fragment_contiainer_view)
+        }
     }
 
     private fun setupViews(){
-        binding.logoutTest.setOnClickListener{
-            UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
-                }
-                else {
-                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                    moveIntentAllClear(LoginActivity::class.java)
-                }
-            }
-        }
-
         binding.mainBottomFab.setOnClickListener {
             moveIntent(QrActivity::class.java)
         }
+
     }
 }

@@ -26,7 +26,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
 
     private fun setupViews(){
         binding.singupBtn.setOnClickListener {
-            moveIntent(RegistrationActivity::class.java)
+            moveIntentAllClear(RegistrationActivity::class.java)
         }
 
         binding.loginBtn.setOnClickListener {
@@ -49,7 +49,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
             }
             else if (token != null) {
                 Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                moveIntent(MainActivity::class.java)
+                moveIntentAllClear(MainActivity::class.java)
             }
         }
 

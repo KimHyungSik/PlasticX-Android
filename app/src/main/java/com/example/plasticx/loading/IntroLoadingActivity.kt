@@ -108,8 +108,6 @@ class IntroLoadingActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun moveIntentAllClear(activity: Class<*>) {
         val intent = Intent(this, activity)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
