@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/homeFragment"
         android:title="홈"
         android:icon="@drawable/ic_baseline_home_24"/>
     <item
-        android:id="@+id/list"
+        android:id="@+id/tumblrFragment"
         android:title="리스트"
         android:icon="@drawable/ic_baseline_list_24"/>
 
@@ -16,11 +16,11 @@
         android:title=""
         />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:title="프로필"
         android:icon="@drawable/ic_baseline_person_24"/>
     <item
-        android:id="@+id/settings"
+        android:id="@+id/moreFragment"
         android:title="설정"
         android:icon="@drawable/ic_baseline_settings_24"/>
 </menu>

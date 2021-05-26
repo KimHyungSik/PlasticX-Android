@@ -8,6 +8,6 @@ import androidx.fragment.app.Fragment
 import com.example.plasticx.base.BaseFragment
 import com.example.plasticx.databinding.TumblrFragmentBinding
 
-class TumblrListFragment : BaseFragment<TumblrFragmentBinding>() {
+class TumblrFragment : BaseFragment<TumblrFragmentBinding>() {
     override fun getViewBinding(): TumblrFragmentBinding  = TumblrFragmentBinding.inflate(layoutInflater)
 }
