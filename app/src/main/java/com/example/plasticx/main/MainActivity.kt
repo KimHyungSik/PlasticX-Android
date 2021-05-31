@@ -1,6 +1,7 @@
 package com.example.plasticx.main
 
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.plasticx.R
@@ -11,6 +12,7 @@ import com.example.plasticx.qr.QrActivity
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     val TAG = "MainActivity - 로그"
+    private var lastTimeBackPressed : Long = 0
 
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
             = ActivityMainBinding::inflate
@@ -30,6 +32,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.mainBottomFab.setOnClickListener {
             moveIntent(QrActivity::class.java)
         }
+    }
 
+    override fun onBackPressed() {
+        if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
+            lastTimeBackPressed = System.currentTimeMillis()
+            Toast.makeText(this,"'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG).show()
+        } else {
+            finish()
+        }
     }
 }

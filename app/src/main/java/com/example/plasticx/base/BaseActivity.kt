@@ -14,7 +14,6 @@ import com.kakao.sdk.user.UserApiClient
 abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
-    private var lastTimeBackPressed : Long = 0
 
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
@@ -74,13 +73,5 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         startActivity(intent)
     }
 
-    override fun onBackPressed() {
-        if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
-            lastTimeBackPressed = System.currentTimeMillis()
-            Toast.makeText(this,"'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_LONG).show()
-        } else {
-            finish()
-        }
-    }
 
 }

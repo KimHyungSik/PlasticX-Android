@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'       // Retrofit
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'           // OkHttp
     implementation "androidx.recyclerview:recyclerview:1.2.0"    // Recyclerview
+    implementation "androidx.cardview:cardview:1.0.0"            // CardView
+    implementation "androidx.viewpager2:viewpager2:1.0.0"        // View Pager2
 
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
 
