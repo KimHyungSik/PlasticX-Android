@@ -16,13 +16,15 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(){
         var models: MutableList<String> = mutableListOf()
 
         // 더미 데이터
-        models.add("AAAAAA")
-        models.add("BBBBBB")
-        models.add("CCCCCC")
-        models.add("DDDDDD")
+        models.add("")
+        models.add("")
+        models.add("")
+        models.add("")
 
         val adapter = ViewPagerAdapter(models, activity?.applicationContext!!)
         viewPager.adapter = adapter
+
+        binding.dotsIndicator.setViewPager2(viewPager)
 
         // 좌우 미리보기 생성
         val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.viewpager_current_item_horizontal_margin)
