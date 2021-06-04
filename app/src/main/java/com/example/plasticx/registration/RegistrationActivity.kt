@@ -1,14 +1,13 @@
 package com.example.plasticx.registration
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import com.example.plasticx.MyApplication
 import com.example.plasticx.base.BaseLoginActivity
+import com.example.plasticx.dagger.di.ViewModelFactoryModule
 import com.example.plasticx.dagger.viewmodelFactory.RetrofitFactory
-import com.example.plasticx.databinding.ActivityLoginBinding
 import com.example.plasticx.databinding.ActivityRegistrationBinding
-import com.example.plasticx.retrofit.repository.RetrofitRepository
+import javax.inject.Inject
 
 class RegistrationActivity : BaseLoginActivity<ActivityRegistrationBinding>() {
 
@@ -16,11 +15,14 @@ class RegistrationActivity : BaseLoginActivity<ActivityRegistrationBinding>() {
             = ActivityRegistrationBinding::inflate
 
     private lateinit var registrationViewModel: RegistrationViewModel
-    private lateinit var retrofitRepository: RetrofitRepository
+
+    @Inject lateinit var retrofitFactory: RetrofitFactory
 
     override fun setup() {
-        retrofitRepository = RetrofitRepository()
-        registrationViewModel = ViewModelProvider(this, RetrofitFactory(retrofitRepository)).get(RegistrationViewModel::class.java)
+        (application as MyApplication).appComponent.inject(this)
+
+        registrationViewModel = ViewModelProvider(this, retrofitFactory).get(RegistrationViewModel::class.java)
+
         binding.registerBtn.setOnClickListener {
             var flag = false
             if(binding.registrationEmail.text?.length == 0){

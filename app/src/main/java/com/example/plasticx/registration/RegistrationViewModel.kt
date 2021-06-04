@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.plasticx.retrofit.repository.RetrofitRepository
 import com.example.plasticx.utils.RESPONSE_STATUIS
+import javax.inject.Inject
 
-class RegistrationViewModel(val retrofitRepository: RetrofitRepository) : ViewModel(){
+class RegistrationViewModel @Inject constructor(val retrofitRepository: RetrofitRepository) : ViewModel(){
     var _loading: MutableLiveData<Boolean> = MutableLiveData()
     var _registerStatu: MutableLiveData<Boolean> = MutableLiveData()
 
