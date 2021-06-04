@@ -4,22 +4,27 @@ import com.example.plasticx.utils.Utility.BASE_URL
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface InUserRetrofit {
 
-    @POST(BASE_URL+"api/user/register")
+    @FormUrlEncoded
+    @POST("api/user/register")
     fun userRegister(
-        @Body name: String,
-        @Body email: String,
-        @Body password: String,
-        @Body Token: String
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("Token") Token: String
     ): Call<JsonElement>
 
-    @POST(BASE_URL + "api/user/login")
+    @FormUrlEncoded
+    @POST("api/user/login")
     fun userLogin(
-        @Body email: String,
-        @Body password: String
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("Token") Token: String
     )
 
 }

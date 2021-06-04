@@ -22,19 +22,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
     //새 토큰 생성 시 호출
     override fun onNewToken(token: String) {
-        Log.d(TAG, "onNewToken: $token")
     }
 
     fun getToken(callback: (String)->Unit){
         var token = ""
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
             // Get new FCM registration token
             token = task.result.toString()
-            Log.d(TAG, "getToken: $token")
             callback(token)
         })
     }
