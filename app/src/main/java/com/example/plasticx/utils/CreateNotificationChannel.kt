@@ -16,7 +16,6 @@ class CreateNotificationChannel(){
     //Notification Channel 생성
     @RequiresApi(Build.VERSION_CODES.O)
     fun createNotificationChannel(notificationManager: NotificationManager){
-        Log.d(TAG, "CreateNotificatonChannel - createNotificationChannel()")
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_NOTIFICATION)
             .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)

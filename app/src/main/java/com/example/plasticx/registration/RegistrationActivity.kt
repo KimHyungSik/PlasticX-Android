@@ -64,7 +64,6 @@ class RegistrationActivity : BaseLoginActivity<ActivityRegistrationBinding>() {
                     binding.registrationPassword.text!!.toString()
                 )
             }
-
         }
     }
 

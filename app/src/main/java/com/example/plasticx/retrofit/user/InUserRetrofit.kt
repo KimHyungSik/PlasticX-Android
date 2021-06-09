@@ -1,22 +1,16 @@
 package com.example.plasticx.retrofit.user
 
-import com.example.plasticx.utils.Utility.BASE_URL
+import com.example.plasticx.model.RegisterUser
 import com.google.gson.JsonElement
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface InUserRetrofit {
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("api/user/register")
     fun userRegister(
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String,
-        @Field("Token") Token: String
+        @Body body: RegisterUser
     ): Call<JsonElement>
 
     @FormUrlEncoded

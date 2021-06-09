@@ -6,12 +6,13 @@ import android.util.Log
 import android.widget.Toast
 import com.example.plasticx.MyApplication
 import com.example.plasticx.firebase.MyFirebaseMessagingService
+import com.example.plasticx.model.RegisterUser
 import com.example.plasticx.utils.RESPONSE_STATUIS
 import com.example.plasticx.utils.Utility.BASE_URL
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.create
 
 class UserRetrofitManager {
     companion object {
@@ -30,16 +31,21 @@ class UserRetrofitManager {
             firebaseToken = it
         }
 
-        val call = UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
-            ?.userRegister(name, email, password, firebaseToken)
+        val registerUser = RegisterUser(
+            name,
+            email,
+            password
+        )
 
-        call?.enqueue(object : retrofit2.Callback<JsonElement> {
+        UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
+            ?.userRegister(registerUser)
+            ?.enqueue(object : retrofit2.Callback<JsonElement> {
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                 response.body()?.let {
                     val body = it.asJsonObject
                     Log.d(TAG, "onResponse: $body")
                     if (body.get("RESULT").asString == "200") {
-                        completion(RESPONSE_STATUIS.OK, body.get("userid").asString)
+                        completion(RESPONSE_STATUIS.OK, body.get("user_id").asString)
                     } else {
                         completion(RESPONSE_STATUIS.ERROR, null)
                     }

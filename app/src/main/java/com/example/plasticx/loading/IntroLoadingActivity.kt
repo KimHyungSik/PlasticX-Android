@@ -45,9 +45,6 @@ class IntroLoadingActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             delay(900)
-            MyFirebaseMessagingService().getToken{
-                Log.d(TAG, "onCreate: $it")
-            }
             permissions()
         }
     }
