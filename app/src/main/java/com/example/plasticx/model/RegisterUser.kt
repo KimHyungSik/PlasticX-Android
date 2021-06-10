@@ -3,7 +3,8 @@ package com.example.plasticx.model
 import com.google.gson.annotations.SerializedName
 
 data class RegisterUser(
-    @SerializedName("name") val name: String,
-    @SerializedName("email") val email: String,
-    @SerializedName("password") val password: String,
+    @SerializedName("name") var name: String,
+    @SerializedName("email") var email: String,
+    @SerializedName("password") var password: String,
+    @SerializedName("Token") var firebaseToken: String
 )

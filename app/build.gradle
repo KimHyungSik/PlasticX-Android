@@ -56,6 +56,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.0"    // Recyclerview
     implementation "androidx.cardview:cardview:1.0.0"            // CardView
     implementation "androidx.viewpager2:viewpager2:1.0.0"        // View Pager2
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'        // RxAndroid
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'         // RxKotlin
+
 
 
     implementation 'com.google.firebase:firebase-messaging:22.0.0'

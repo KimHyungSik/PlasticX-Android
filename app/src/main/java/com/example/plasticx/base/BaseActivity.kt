@@ -2,11 +2,13 @@ package com.example.plasticx.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.UserManager
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.example.plasticx.login.LoginActivity
+import com.example.plasticx.user.UserManagerObject
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
@@ -24,7 +26,7 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
 
-        kakoTokenAccess()
+        checkLogin()
         setup()
     }
 
@@ -36,26 +38,8 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     }
 
     // 로그인 상태가 아니라면 로그인 페지로 이동
-    fun kakoTokenAccess(){
-        if(this == LoginActivity::class.java) return
-
-        if (AuthApiClient.instance.hasToken()) {
-            UserApiClient.instance.accessTokenInfo { _, error ->
-                if (error != null) {
-                    if (error is KakaoSdkError && error.isInvalidTokenError() == true) {
-                        //로그인 필요
-                        moveIntentAllClear(LoginActivity::class.java)
-                    }
-                    else {
-                        //기타 에러
-                    }
-                }
-                else {
-                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
-                }
-            }
-        }else{
-            //로그인 필요
+    fun checkLogin(){
+        if(UserManagerObject.userId.isEmpty()){
             moveIntentAllClear(LoginActivity::class.java)
         }
     }

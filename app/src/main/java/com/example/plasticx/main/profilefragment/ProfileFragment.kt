@@ -7,6 +7,10 @@ import com.example.plasticx.base.BaseFragment
 import com.example.plasticx.databinding.ProfileFragmentBinding
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
+import com.example.plasticx.user.UserManagerObject
+import com.example.plasticx.utils.LOGIN_STATUIS
+import com.example.plasticx.utils.PreferencesManager
+import com.example.plasticx.utils.Utility.USER_ID_KEY
 import com.kakao.sdk.user.UserApiClient
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
@@ -32,6 +36,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
         }
 
         binding.logOutView.setOnClickListener {
+            if(UserManagerObject.loginState == LOGIN_STATUIS.KAKAO)
             // 카카오 로그아웃
             UserApiClient.instance.logout { error ->
                 if (error != null) {
@@ -39,9 +44,14 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                 }
                 else {
                     Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                    PreferencesManager.setString(activity?.application!!,USER_ID_KEY, "")
+                    UserManagerObject.setUpUser("", LOGIN_STATUIS.NO)
                     (activity as MainActivity).moveIntentAllClear(LoginActivity::class.java)
                 }
-
+            }else if(UserManagerObject.loginState == LOGIN_STATUIS.LOCAL){
+                PreferencesManager.setString(activity?.application!!,USER_ID_KEY, "")
+                UserManagerObject.setUpUser("", LOGIN_STATUIS.NO)
+                (activity as MainActivity).moveIntentAllClear(LoginActivity::class.java)
             }
         }
     }

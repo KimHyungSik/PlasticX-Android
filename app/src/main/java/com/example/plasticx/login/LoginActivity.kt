@@ -10,6 +10,10 @@ import com.example.plasticx.databinding.ActivityLoginBinding
 import com.example.plasticx.databinding.ActivityMainBinding
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.registration.RegistrationActivity
+import com.example.plasticx.user.UserManagerObject
+import com.example.plasticx.utils.LOGIN_STATUIS
+import com.example.plasticx.utils.PreferencesManager
+import com.example.plasticx.utils.Utility.USER_ID_KEY
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
@@ -49,7 +53,11 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
             }
             else if (token != null) {
                 Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                moveIntentAllClear(MainActivity::class.java)
+                UserApiClient.instance.accessTokenInfo{ tokenInfo, error ->
+                    // 로그인 상태
+                    UserManagerObject.setUpUser(tokenInfo!!.id.toString(), LOGIN_STATUIS.KAKAO)
+                    moveIntentAllClear(MainActivity::class.java)
+                }
             }
         }
 

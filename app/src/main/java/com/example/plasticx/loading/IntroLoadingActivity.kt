@@ -3,7 +3,6 @@ package com.example.plasticx.loading
 import android.Manifest
 import android.app.NotificationManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -13,11 +12,13 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.plasticx.databinding.ActivityIntroLoadingBinding
-import com.example.plasticx.firebase.MyFirebaseMessagingService
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
+import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.CreateNotificationChannel
-import com.google.firebase.messaging.FirebaseMessaging
+import com.example.plasticx.utils.LOGIN_STATUIS
+import com.example.plasticx.utils.PreferencesManager
+import com.example.plasticx.utils.Utility.USER_ID_KEY
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -51,20 +52,31 @@ class IntroLoadingActivity : AppCompatActivity() {
 
     private fun kakoTokenAccess(){
         if (AuthApiClient.instance.hasToken()) {
-            UserApiClient.instance.accessTokenInfo { _, error ->
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 Log.d(TAG, "kakoTokenAccess: $error")
                 if (error != null) {
                     //로그인 필요
-                    moveIntentAllClear(LoginActivity::class.java)
+                    checkAutoLogin()
                 }
                 else {
                     // 로그인 상태
+                    UserManagerObject.setUpUser(tokenInfo!!.id.toString(), LOGIN_STATUIS.KAKAO)
                     moveIntentAllClear(MainActivity::class.java)
                 }
             }
         }else{
-            //로그인 필요
+            checkAutoLogin()
+        }
+    }
+
+    private fun checkAutoLogin(){
+        val userId = PreferencesManager.getString(this, USER_ID_KEY)
+        if(userId.isEmpty()){
             moveIntentAllClear(LoginActivity::class.java)
+        }else{
+            UserManagerObject.userId = userId
+            UserManagerObject.loginState = LOGIN_STATUIS.LOCAL
+            moveIntentAllClear(MainActivity::class.java)
         }
     }
 

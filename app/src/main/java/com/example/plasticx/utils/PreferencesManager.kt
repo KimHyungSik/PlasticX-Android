@@ -3,7 +3,7 @@ package com.example.plasticx.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferencesManager {
+object PreferencesManager {
     public val PREFERENCES_NAME = "PlasticX"
     val DEFAULT_VALUE_STRING = ""
 

@@ -1,5 +1,6 @@
 package com.example.plasticx.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
@@ -8,6 +9,7 @@ import com.example.plasticx.R
 import com.example.plasticx.base.BaseActivity
 import com.example.plasticx.databinding.ActivityMainBinding
 import com.example.plasticx.qr.QrActivity
+import com.example.plasticx.user.UserManagerObject
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -26,6 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val navHostFragment= supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
+        Log.d(TAG, "setup: ${UserManagerObject.userId}")
     }
 
     private fun setupViews(){
