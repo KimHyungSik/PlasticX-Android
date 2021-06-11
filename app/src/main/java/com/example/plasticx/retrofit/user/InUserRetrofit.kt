@@ -1,5 +1,6 @@
 package com.example.plasticx.retrofit.user
 
+import com.example.plasticx.model.LoginUser
 import com.example.plasticx.model.RegisterUser
 import com.google.gson.JsonElement
 import retrofit2.Call
@@ -13,12 +14,10 @@ interface InUserRetrofit {
         @Body body: RegisterUser
     ): Call<JsonElement>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("api/user/login")
     fun userLogin(
-        @Field("email") email: String,
-        @Field("password") password: String,
-        @Field("Token") Token: String
-    )
+        @Body body: LoginUser
+    ): Call<JsonElement>
 
 }

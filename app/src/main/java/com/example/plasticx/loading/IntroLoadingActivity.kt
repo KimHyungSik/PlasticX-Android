@@ -16,7 +16,7 @@ import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.CreateNotificationChannel
-import com.example.plasticx.utils.LOGIN_STATUIS
+import com.example.plasticx.utils.LOGIN_STATE
 import com.example.plasticx.utils.PreferencesManager
 import com.example.plasticx.utils.Utility.USER_ID_KEY
 import com.kakao.sdk.auth.AuthApiClient
@@ -60,7 +60,7 @@ class IntroLoadingActivity : AppCompatActivity() {
                 }
                 else {
                     // 로그인 상태
-                    UserManagerObject.setUpUser(tokenInfo!!.id.toString(), LOGIN_STATUIS.KAKAO)
+                    UserManagerObject.setUpUser(tokenInfo!!.id.toString(), LOGIN_STATE.KAKAO)
                     moveIntentAllClear(MainActivity::class.java)
                 }
             }
@@ -74,8 +74,7 @@ class IntroLoadingActivity : AppCompatActivity() {
         if(userId.isEmpty()){
             moveIntentAllClear(LoginActivity::class.java)
         }else{
-            UserManagerObject.userId = userId
-            UserManagerObject.loginState = LOGIN_STATUIS.LOCAL
+            UserManagerObject.setUpUser(userId, LOGIN_STATE.LOCAL)
             moveIntentAllClear(MainActivity::class.java)
         }
     }

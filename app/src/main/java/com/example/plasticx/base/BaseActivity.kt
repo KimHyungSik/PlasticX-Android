@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.example.plasticx.loading.LottieLoadingDialog
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.user.UserManagerObject
 import com.kakao.sdk.auth.AuthApiClient
@@ -20,11 +21,13 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
         get() = _binding as VB
+    private lateinit var loading : LottieLoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
+        loading = LottieLoadingDialog(this)
 
         checkLogin()
         setup()
@@ -37,8 +40,8 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         _binding = null
     }
 
-    // 로그인 상태가 아니라면 로그인 페지로 이동
-    fun checkLogin(){
+    // 로그인 상태가 아니라면 로그인 페이지로 이동
+    private fun checkLogin(){
         if(UserManagerObject.userId.isEmpty()){
             moveIntentAllClear(LoginActivity::class.java)
         }
@@ -55,6 +58,13 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     open fun moveIntent(activity: Class<*>) {
         val intent = Intent(this, activity)
         startActivity(intent)
+    }
+
+    open fun showLoadingAni(){
+        loading.show()
+    }
+    open fun dismissLoadingAni(){
+        loading.dismiss()
     }
 
 

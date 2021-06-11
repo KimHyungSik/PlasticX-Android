@@ -13,7 +13,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(){
 
     override fun setUpViews(){
         val viewPager = binding.homeViewPager
-        var models: MutableList<String> = mutableListOf()
+        val models: MutableList<String> = mutableListOf()
 
         // 더미 데이터
         models.add("")

@@ -5,8 +5,9 @@ import android.os.Looper
 import android.widget.Toast
 import com.example.plasticx.MyApplication
 import com.example.plasticx.firebase.MyFirebaseMessagingService
+import com.example.plasticx.model.LoginUser
 import com.example.plasticx.model.RegisterUser
-import com.example.plasticx.utils.RESPONSE_STATUIS
+import com.example.plasticx.utils.RESPONSE_STATE
 import com.example.plasticx.utils.Utility.BASE_URL
 import com.google.gson.JsonElement
 import io.reactivex.Observable
@@ -24,11 +25,8 @@ class UserRetrofitManager {
         name: String,
         email: String,
         password: String,
-        completion: (RESPONSE_STATUIS, String?) -> Unit
+        completion: (RESPONSE_STATE, String?) -> Unit
     ) {
-        var firebaseToken: String = ""
-
-
         val registerUser = RegisterUser(
             name,
             email,
@@ -55,23 +53,51 @@ class UserRetrofitManager {
                         response.body()?.let {
                             val body = it.asJsonObject
                             if (body.get("RESULT").asString == "200") {
-                                completion(RESPONSE_STATUIS.OK, body.get("user_id").asString)
+                                completion(RESPONSE_STATE.OK, body.get("user_id").asString)
                             } else {
-                                completion(RESPONSE_STATUIS.FAIL, body.get("RESULT").asString)
+                                completion(RESPONSE_STATE.FAIL, body.get("RESULT").asString)
                             }
                         }
                     }
 
                     override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                            toast("서버와 연결에 실패 하였습니다.")
-                            completion(RESPONSE_STATUIS.SERVER_ERROR, null)
+                        toast("서버와 연결에 실패 하였습니다.")
+                        completion(RESPONSE_STATE.SERVER_ERROR, null)
                     }
 
                 })
         }.isDisposed
     }
 
-    private fun toast(massage: String){
+    fun userLogin(
+        email: String,
+        password: String,
+        completion: (RESPONSE_STATE, String?) -> Unit
+    ) {
+
+        UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
+            ?.userLogin(LoginUser(email, password))
+            ?.enqueue(object : retrofit2.Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                    response.body()?.let {
+                        val body = it.asJsonObject
+                        if (body.get("RESULT").asString == "로그인 성공") {
+                            completion(RESPONSE_STATE.OK, body.get("userId").asString)
+                        } else {
+                            completion(RESPONSE_STATE.ERROR, body.get("RESULT").asString)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                    toast("서버와 연결에 실패 하였습니다.")
+                    completion(RESPONSE_STATE.SERVER_ERROR, null)
+                }
+
+            })
+    }
+
+    private fun toast(massage: String) {
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(
                 MyApplication.instance,

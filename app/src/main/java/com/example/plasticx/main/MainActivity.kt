@@ -28,7 +28,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val navHostFragment= supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
-        Log.d(TAG, "setup: ${UserManagerObject.userId}")
     }
 
     private fun setupViews(){

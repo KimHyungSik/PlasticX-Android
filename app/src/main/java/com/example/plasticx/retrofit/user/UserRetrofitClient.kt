@@ -56,10 +56,10 @@ object UserRetrofitClient {
 
                 val response = chain.proceed(originalRequest)
 
-//                Log.d(TAG, "intercept: ${response.request}")
-//                Log.d(TAG, "intercept: ${response.message}")
-//                Log.d(TAG, "intercept: ${response.code}")
-//                Log.d(TAG, "intercept: ${response.protocol}")
+                Log.d(TAG, "intercept: ${response.request}")
+                Log.d(TAG, "intercept: ${response.message}")
+                Log.d(TAG, "intercept: ${response.code}")
+                Log.d(TAG, "intercept: ${response.protocol}")
 
                 if (response.code != 200) {
                     Handler(Looper.getMainLooper()).post {
@@ -74,11 +74,11 @@ object UserRetrofitClient {
             }
         })
 
-        //loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         // 인터럽트 추가
-        //client.addInterceptor(loggingInterceptor)
-        //client.addNetworkInterceptor(interceptor)
+        client.addInterceptor(loggingInterceptor)
+        client.addNetworkInterceptor(interceptor)
 
         val gson = GsonBuilder().setLenient().create()
 

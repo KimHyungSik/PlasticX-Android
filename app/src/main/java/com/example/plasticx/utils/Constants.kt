@@ -6,14 +6,15 @@ object Utility{
     const val USER_ID_KEY = "PLASTICX"
 }
 
-enum class RESPONSE_STATUIS{
+enum class RESPONSE_STATE{
     OK,
     FAIL,
+    NOTTHING,
     ERROR,
     SERVER_ERROR
 }
 
-enum class LOGIN_STATUIS{
+enum class LOGIN_STATE{
     NO,
     KAKAO,
     LOCAL

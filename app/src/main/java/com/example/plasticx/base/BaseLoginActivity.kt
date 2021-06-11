@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.example.plasticx.loading.LottieLoadingDialog
 import com.example.plasticx.login.LoginActivity
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
@@ -16,6 +17,7 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
     abstract val bindingInflater: (LayoutInflater) -> VB
 
     private var lastTimeBackPressed : Long = 0
+    private lateinit var loading : LottieLoadingDialog
 
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
@@ -25,7 +27,7 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(requireNotNull(_binding).root)
-
+        loading = LottieLoadingDialog(this)
         setup()
     }
 
@@ -58,6 +60,14 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
             finish()
         }
     }
+
+    open fun showLoadingAni(){
+        loading.show()
+    }
+    open fun dismissLoadingAni(){
+        loading.dismiss()
+    }
+
 
 }
 

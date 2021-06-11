@@ -1,9 +1,8 @@
-package com.example.plasticx.registration
+package com.example.plasticx.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.plasticx.MyApplication
-import com.example.plasticx.retrofit.repository.RetrofitRepository
 import com.example.plasticx.retrofit.user.UserRetrofitManager
 import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.LOGIN_STATE
@@ -12,24 +11,24 @@ import com.example.plasticx.utils.RESPONSE_STATE
 import com.example.plasticx.utils.Utility
 import javax.inject.Inject
 
-class RegistrationViewModel @Inject constructor(val retrofitRepository: RetrofitRepository) : ViewModel(){
+class LoginViewModel @Inject constructor(): ViewModel() {
     var _loading: MutableLiveData<Boolean> = MutableLiveData()
-    var _registerStatu: MutableLiveData<RESPONSE_STATE> = MutableLiveData()
+    var _loginStatu: MutableLiveData<RESPONSE_STATE> = MutableLiveData()
 
-    fun userRegister(name: String, email: String, password: String){
+    fun login(email: String, password: String){
         _loading.postValue(true)
 
-        UserRetrofitManager.instance.userRegister(name, email, password, completion = {
-                _responseState, s ->
+        UserRetrofitManager.instance.userLogin(email, password, completion = {
+            _responseState, s->
             when(_responseState){
-                RESPONSE_STATE.OK -> {
-                    _registerStatu.postValue(_responseState)
+                RESPONSE_STATE.OK->{
+                    _loginStatu.postValue(_responseState)
                     PreferencesManager.setString(MyApplication.instance, Utility.USER_ID_KEY, s!!)
                     UserManagerObject.setUpUser(s, LOGIN_STATE.LOCAL)
                     _loading.postValue(false)
                 }
                 else ->  {
-                    _registerStatu.postValue(_responseState)
+                    _loginStatu.postValue(_responseState)
                     _loading.postValue(false)
                 }
             }

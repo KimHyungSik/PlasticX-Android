@@ -13,4 +13,5 @@ import javax.inject.Singleton
 ])
 interface AppComponent {
     fun inject(activity: RegistrationActivity)
+    fun inject(activity: LoginActivity)
 }
