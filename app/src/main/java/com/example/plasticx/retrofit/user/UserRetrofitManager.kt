@@ -81,8 +81,8 @@ class UserRetrofitManager {
                 override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                     response.body()?.let {
                         val body = it.asJsonObject
-                        if (body.get("RESULT").asString == "로그인 성공") {
-                            completion(RESPONSE_STATE.OK, body.get("userId").asString)
+                        if (body.get("RESULT").asString == "200") {
+                            completion(RESPONSE_STATE.OK, body.get("user_id").asString)
                         } else {
                             completion(RESPONSE_STATE.ERROR, body.get("RESULT").asString)
                         }
