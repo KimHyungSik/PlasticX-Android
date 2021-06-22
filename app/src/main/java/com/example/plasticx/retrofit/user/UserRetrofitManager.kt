@@ -34,15 +34,14 @@ class UserRetrofitManager {
             ""
         )
 
-        val observable = Observable.just(registerUser)
+        Observable.just(registerUser)
             .subscribeOn(Schedulers.io())
             .map { item ->
                 MyFirebaseMessagingService().getToken {
                     item.firebaseToken = it
                 }
             }
-
-        observable.subscribe {
+            .subscribe{
             UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
                 ?.userRegister(registerUser)
                 ?.enqueue(object : retrofit2.Callback<JsonElement> {

@@ -6,7 +6,8 @@ import com.example.plasticx.utils.PreferencesManager
 import com.example.plasticx.utils.Utility.USER_ID_KEY
 
 class RetrofitRepository {
-    fun userRegister(){
+    fun userRepository(): UserRetrofitManager{
+        return UserRetrofitManager.instance
     }
 
 }

@@ -19,7 +19,7 @@ class RegistrationViewModel @Inject constructor(val retrofitRepository: Retrofit
     fun userRegister(name: String, email: String, password: String){
         _loading.postValue(true)
 
-        UserRetrofitManager.instance.userRegister(name, email, password, completion = {
+        retrofitRepository.userRepository().userRegister(name, email, password, completion = {
                 _responseState, s ->
             when(_responseState){
                 RESPONSE_STATE.OK -> {
