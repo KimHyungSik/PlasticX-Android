@@ -20,4 +20,9 @@ interface InUserRetrofit {
         @Body body: LoginUser
     ): Call<JsonElement>
 
+    @Headers("Content-Type: application/json")
+    @GET("api/user/info/{user_id}")
+    fun userInfo(
+        @Path("user_id") userId: String
+    ): Call<JsonElement>
 }

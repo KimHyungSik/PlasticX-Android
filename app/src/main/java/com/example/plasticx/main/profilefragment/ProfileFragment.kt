@@ -7,14 +7,17 @@ import com.example.plasticx.base.BaseFragment
 import com.example.plasticx.databinding.ProfileFragmentBinding
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
+import com.example.plasticx.retrofit.repository.RetrofitRepository
 import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.LOGIN_STATE
 import com.example.plasticx.utils.PreferencesManager
+import com.example.plasticx.utils.RESPONSE_STATE
 import com.example.plasticx.utils.Utility.USER_ID_KEY
+import com.google.gson.JsonObject
 import com.kakao.sdk.user.UserApiClient
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
-    val TAG = "ProfileFragment - 로그"
+    private val TAG = "ProfileFragment - 로그"
     override fun getViewBinding(): ProfileFragmentBinding =
         ProfileFragmentBinding.inflate(layoutInflater)
 
@@ -35,6 +38,13 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                         .into(binding.avatarImageView)
                 }
             }
+        }else{
+            RetrofitRepository().userRepository().userInfo(completion = {
+                    _responseState, body->
+                run {
+                    binding.userName.text = body!!.get("name").asString + "님"
+                }
+            })
         }
 
         binding.logOutView.setOnClickListener {

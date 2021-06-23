@@ -23,6 +23,7 @@ class RegistrationViewModel @Inject constructor(val retrofitRepository: Retrofit
                 _responseState, s ->
             when(_responseState){
                 RESPONSE_STATE.OK -> {
+                    UserManagerObject.userName = name
                     _registerStatu.postValue(_responseState)
                     PreferencesManager.setString(MyApplication.instance, Utility.USER_ID_KEY, s!!)
                     UserManagerObject.setUpUser(s, LOGIN_STATE.LOCAL)

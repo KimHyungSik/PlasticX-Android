@@ -7,9 +7,11 @@ import com.example.plasticx.MyApplication
 import com.example.plasticx.firebase.MyFirebaseMessagingService
 import com.example.plasticx.model.LoginUser
 import com.example.plasticx.model.RegisterUser
+import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.RESPONSE_STATE
 import com.example.plasticx.utils.Utility.BASE_URL
 import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
@@ -84,6 +86,29 @@ class UserRetrofitManager {
                             completion(RESPONSE_STATE.OK, body.get("user_id").asString)
                         } else {
                             completion(RESPONSE_STATE.ERROR, body.get("RESULT").asString)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                    toast("서버와 연결에 실패 하였습니다.")
+                    completion(RESPONSE_STATE.SERVER_ERROR, null)
+                }
+
+            })
+    }
+
+    fun userInfo(completion: (RESPONSE_STATE, JsonObject?) -> Unit){
+        UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
+            ?.userInfo(UserManagerObject.userId)
+            ?.enqueue(object : retrofit2.Callback<JsonElement>{
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                    response.body()?.let {
+                        val body = it.asJsonObject
+                        if (body.get("RESULT").asString == "200") {
+                            completion(RESPONSE_STATE.OK, body)
+                        } else {
+                            completion(RESPONSE_STATE.ERROR, null)
                         }
                     }
                 }
