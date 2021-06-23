@@ -11,10 +11,10 @@ import com.example.plasticx.retrofit.repository.RetrofitRepository
 import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.LOGIN_STATE
 import com.example.plasticx.utils.PreferencesManager
-import com.example.plasticx.utils.RESPONSE_STATE
 import com.example.plasticx.utils.Utility.USER_ID_KEY
-import com.google.gson.JsonObject
 import com.kakao.sdk.user.UserApiClient
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
     private val TAG = "ProfileFragment - 로그"
@@ -39,12 +39,17 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                 }
             }
         }else{
-            RetrofitRepository().userRepository().userInfo(completion = {
-                    _responseState, body->
-                run {
-                    binding.userName.text = body!!.get("name").asString + "님"
-                }
-            })
+          RetrofitRepository().getUserRxInfo()
+              .run{
+                  this.userInfo(UserManagerObject.userId)
+                      .subscribeOn(Schedulers.computation())
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .filter{it.asJsonObject.get("RESULT").asString == "200"}
+                      .subscribe {
+                          val body = it.asJsonObject
+                          binding.userName.text = body.get("name").asString + " 님"
+                      }
+              }
         }
 
         binding.logOutView.setOnClickListener {

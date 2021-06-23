@@ -3,6 +3,7 @@ package com.example.plasticx.retrofit.user
 import com.example.plasticx.model.LoginUser
 import com.example.plasticx.model.RegisterUser
 import com.google.gson.JsonElement
+import io.reactivex.Flowable
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -24,5 +25,5 @@ interface InUserRetrofit {
     @GET("api/user/info/{user_id}")
     fun userInfo(
         @Path("user_id") userId: String
-    ): Call<JsonElement>
+    ): Flowable<JsonElement>
 }
