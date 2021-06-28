@@ -39,17 +39,11 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                 }
             }
         }else{
-          RetrofitRepository().getUserRxInfo()
-              .run{
-                  this.userInfo(UserManagerObject.userId)
-                      .subscribeOn(Schedulers.computation())
-                      .observeOn(AndroidSchedulers.mainThread())
-                      .filter{it.asJsonObject.get("RESULT").asString == "200"}
-                      .subscribe {
-                          val body = it.asJsonObject
-                          binding.userName.text = body.get("name").asString + " 님"
-                      }
-              }
+          RetrofitRepository().getUserRxInfo(UserManagerObject.userId)
+              .subscribe {
+                  val body = it.asJsonObject
+                  binding.userName.text = body.get("name").asString + " 님"
+              }.isDisposed
         }
 
         binding.logOutView.setOnClickListener {

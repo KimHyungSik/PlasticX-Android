@@ -7,8 +7,10 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
+import com.example.plasticx.MyApplication
 import com.example.plasticx.base.BaseActivity
 import com.example.plasticx.databinding.ActivityQrBinding
+import javax.inject.Inject
 
 class QrActivity : BaseActivity<ActivityQrBinding>() {
 
@@ -17,7 +19,12 @@ class QrActivity : BaseActivity<ActivityQrBinding>() {
 
     private lateinit var codeScanner: CodeScanner
 
+    @Inject
+    lateinit var viewModel: QrViewModel
+
     override fun setup() {
+        (application as MyApplication).appComponent.inject(this)
+
         codeScanner = CodeScanner(this, binding.scannerView)
 
         // Parameters (default values)
@@ -33,6 +40,8 @@ class QrActivity : BaseActivity<ActivityQrBinding>() {
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
                 Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                viewModel.borrowTumbler(it.text)
+                codeScanner.stopPreview()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS

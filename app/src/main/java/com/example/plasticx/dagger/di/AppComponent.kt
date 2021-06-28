@@ -1,6 +1,7 @@
 package com.example.plasticx.dagger.di
 
 import com.example.plasticx.login.LoginActivity
+import com.example.plasticx.qr.QrActivity
 import com.example.plasticx.registration.RegistrationActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -14,4 +15,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(activity: RegistrationActivity)
     fun inject(activity: LoginActivity)
+    fun inject(activity: QrActivity)
 }

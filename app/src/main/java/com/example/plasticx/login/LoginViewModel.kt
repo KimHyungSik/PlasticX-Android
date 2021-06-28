@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.plasticx.MyApplication
 import com.example.plasticx.retrofit.repository.RetrofitRepository
-import com.example.plasticx.retrofit.user.UserRetrofitManager
 import com.example.plasticx.user.UserManagerObject
 import com.example.plasticx.utils.LOGIN_STATE
 import com.example.plasticx.utils.PreferencesManager
