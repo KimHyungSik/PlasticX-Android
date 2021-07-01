@@ -1,10 +1,13 @@
 package com.example.plasticx.base
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.UserManager
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.example.plasticx.loading.LottieLoadingDialog
@@ -17,6 +20,10 @@ import com.kakao.sdk.user.UserApiClient
 abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
+    val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
+    ) { activityResult -> resultActivity()}
+
 
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
@@ -58,6 +65,15 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     open fun moveIntent(activity: Class<*>) {
         val intent = Intent(this, activity)
         startActivity(intent)
+    }
+
+    open fun moveIntentResult(activity: Class<*>){
+        val intent = Intent(this, activity)
+        requestActivity.launch(intent)
+    }
+
+    open fun resultActivity(){
+
     }
 
     open fun showLoadingAni(){

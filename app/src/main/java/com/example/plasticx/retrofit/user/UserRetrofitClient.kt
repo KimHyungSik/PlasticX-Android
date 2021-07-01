@@ -58,6 +58,7 @@ object UserRetrofitClient {
             Log.d(TAG, "intercept: ${response.message}")
             Log.d(TAG, "intercept: ${response.code}")
             Log.d(TAG, "intercept: ${response.protocol}")
+            Log.d(TAG, "intercept: ${response.body.toString()}")
 
             if (response.code != 200) {
                 Handler(Looper.getMainLooper()).post {

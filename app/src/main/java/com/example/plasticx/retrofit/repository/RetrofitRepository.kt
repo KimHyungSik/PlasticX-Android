@@ -48,7 +48,7 @@ class RetrofitRepository {
             .filter { it.asJsonObject.get("RESULT").asString == "200" } // 유저 정보 확인 성공
 
     fun borrowTumblerRx(tumblerId: String): Flowable<JsonElement> =
-        interceptorRetrofit
+        retrofitBase
             .create(InTumblerRetrofit::class.java)
             .borrowTumbler(tumblerId, BorrowTumbler(UserManagerObject.userId))
             .subscribeOn(Schedulers.computation())

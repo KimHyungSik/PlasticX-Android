@@ -15,10 +15,15 @@ class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository
 
     fun borrowTumbler(tumblerId: String) {
         retrofitRepository.borrowTumblerRx(tumblerId)
+            .map{it -> {
+                Log.d(TAG, "borrowTumbler: ${it.asJsonObject.asString}")
+            }}
             .subscribe(
                 { Log.d(TAG, "borrowTumbler: $it") },
-                { Log.d(TAG, "borrowTumbler: Error $it") },
-                { Log.d(TAG, "borrowTumbler: Complete")}
+                {
+                    Log.d(TAG, "borrowTumbler: Error $it")
+                },
+                { Log.d(TAG, "borrowTumbler: Complete") }
             ).isDisposed
     }
 
