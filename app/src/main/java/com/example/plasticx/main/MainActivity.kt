@@ -3,13 +3,13 @@ package com.example.plasticx.main
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.plasticx.R
 import com.example.plasticx.base.BaseActivity
 import com.example.plasticx.databinding.ActivityMainBinding
 import com.example.plasticx.qr.QrActivity
-import com.example.plasticx.user.UserManagerObject
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -32,8 +32,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun setupViews(){
         binding.mainBottomFab.setOnClickListener {
-            moveIntent(QrActivity::class.java)
+            moveIntentResult(QrActivity::class.java)
         }
+    }
+
+    override fun resultActivity(activityResult: ActivityResult) {
+        super.resultActivity(activityResult)
+        Log.d(TAG, "resultActivity: $activityResult")
     }
 
     override fun onBackPressed() {

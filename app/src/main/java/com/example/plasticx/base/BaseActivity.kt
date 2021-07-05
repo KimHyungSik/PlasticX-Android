@@ -1,11 +1,9 @@
 package com.example.plasticx.base
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.UserManager
 import android.view.LayoutInflater
-import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,16 +11,13 @@ import androidx.viewbinding.ViewBinding
 import com.example.plasticx.loading.LottieLoadingDialog
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.user.UserManagerObject
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.common.model.KakaoSdkError
-import com.kakao.sdk.user.UserApiClient
 
 abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
     val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
-    ) { activityResult -> resultActivity()}
+    ) { activityResult -> resultActivity(activityResult)}
 
 
     @Suppress("UNCHECKED_CAST")
@@ -72,7 +67,7 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         requestActivity.launch(intent)
     }
 
-    open fun resultActivity(){
+    open fun resultActivity(activityResult: ActivityResult) {
 
     }
 

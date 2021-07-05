@@ -1,18 +1,14 @@
 package com.example.plasticx.qr
 
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.Observer
-import com.example.plasticx.MyApplication
 import com.example.plasticx.retrofit.repository.RetrofitRepository
-import com.google.gson.JsonElement
 import javax.inject.Inject
 
 class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository) {
 
     val TAG = "QrViewModel - 로그"
 
-    fun borrowTumbler(tumblerId: String) {
+    fun borrowTumbler(tumblerId: String, voidFun: () -> Unit) {
         retrofitRepository.borrowTumblerRx(tumblerId)
             .map { it.asJsonObject }
             .subscribe(
@@ -28,16 +24,16 @@ class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository
                             Log.d(TAG, "borrowTumbler: 텁블러 대여 중")
                         }
                         else -> {
-                            Log.d(TAG, "borrowTumbler: Error")
+                            Log.d(TAG, "borrowTumbler: ErrorCOde ${it.get("RESULT").asString}")
                         }
                     }
                 },
                 {
-                    Log.d(TAG, "borrowTumbler: Error ${it}")
+                    Log.d(TAG, "borrowTumbler: Error ${it.message}")
                 },
                 {
-
                     Log.d(TAG, "borrowTumbler: Complete")
+                    voidFun()
                 }
             ).isDisposed
     }

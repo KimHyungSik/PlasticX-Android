@@ -2,6 +2,7 @@ package com.example.plasticx.retrofit.user
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import com.example.plasticx.MyApplication
 import com.example.plasticx.firebase.MyFirebaseMessagingService
@@ -76,10 +77,11 @@ class UserRetrofitManager {
 
         UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
             ?.userLogin(LoginUser(email, password))
-            ?.enqueue(object : retrofit2.Callback<JsonElement>{
+            ?.enqueue(object : retrofit2.Callback<JsonElement> {
                 override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                     response.body()?.let {
                         val body = it.asJsonObject
+                        Log.d(TAG, "onResponse: $body")
                         if (body.get("RESULT").asString == "200") {
                             completion(RESPONSE_STATE.OK, body.get("user_id").asString)
                         } else {
