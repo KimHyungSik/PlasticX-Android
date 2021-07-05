@@ -1,0 +1,38 @@
+package com.example.plasticx.main.listfragment.RecyclerSetup
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.example.plasticx.R
+import com.example.plasticx.model.TumblerItem
+
+class TumblerRecyclerAdapter(inTumblerRecycler: InTumblerRecycler): RecyclerView.Adapter<TumblerRecyclerHolder>() {
+
+    var tumblerlist = ArrayList<TumblerItem>()
+    var iRecycler : InTumblerRecycler? = null
+
+    init{
+        this.iRecycler = inTumblerRecycler
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TumblerRecyclerHolder {
+        return TumblerRecyclerHolder(LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.tumbler_list_item, parent,false),
+            this.iRecycler!!
+        )
+    }
+
+    override fun onBindViewHolder(holder: TumblerRecyclerHolder, position: Int) {
+        val dataItem: TumblerItem = this.tumblerlist[position]
+        holder.bindWithView(dataItem)
+    }
+
+    override fun getItemCount(): Int {
+        return tumblerlist.size
+    }
+
+    fun submitList(tumblerlist: ArrayList<TumblerItem>){
+        this.tumblerlist = tumblerlist
+    }
+}

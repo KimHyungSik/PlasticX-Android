@@ -1,6 +1,7 @@
 package com.example.plasticx.qr
 
 import android.util.Log
+import android.widget.Toast
 import com.example.plasticx.retrofit.repository.RetrofitRepository
 import javax.inject.Inject
 
@@ -24,7 +25,7 @@ class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository
                             Log.d(TAG, "borrowTumbler: 텁블러 대여 중")
                         }
                         else -> {
-                            Log.d(TAG, "borrowTumbler: ErrorCOde ${it.get("RESULT").asString}")
+                            Log.d(TAG, "borrowTumbler: ErrorCode ${it.get("RESULT").asString}")
                         }
                     }
                 },
