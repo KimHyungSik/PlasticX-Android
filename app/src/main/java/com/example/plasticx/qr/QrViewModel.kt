@@ -2,6 +2,7 @@ package com.example.plasticx.qr
 
 import android.util.Log
 import android.widget.Toast
+import com.example.plasticx.MyApplication
 import com.example.plasticx.retrofit.repository.RetrofitRepository
 import javax.inject.Inject
 
@@ -16,13 +17,14 @@ class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository
                 {
                     when (it.get("RESULT").asString) {
                         "200" -> {
-                            Log.d(TAG, "borrowTumbler: 텀블러 대여 성공")
+                            toast("대여성공")
+                            voidFun()
                         }
                         "300" -> {
-                            Log.d(TAG, "borrowTumbler: 보증금 부족")
+                            toast("보증금이 부족 합니다.")
                         }
                         "301" -> {
-                            Log.d(TAG, "borrowTumbler: 텁블러 대여 중")
+                            toast("텀블러가 대여 중 입니다.")
                         }
                         else -> {
                             Log.d(TAG, "borrowTumbler: ErrorCode ${it.get("RESULT").asString}")
@@ -34,8 +36,11 @@ class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository
                 },
                 {
                     Log.d(TAG, "borrowTumbler: Complete")
-                    voidFun()
                 }
             ).isDisposed
+    }
+
+    fun toast(message: String){
+        Toast.makeText(MyApplication.instance, message, Toast.LENGTH_SHORT).show()
     }
 }
