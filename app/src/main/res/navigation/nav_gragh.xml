@@ -7,10 +7,6 @@
         android:id="@+id/homeFragment"
         android:name="com.example.plasticx.main.honefragment.HomeFragment"
         android:label="HomeFragment" >
-        <action
-            android:id="@+id/action_homeFragment_to_tumblrFragment3"
-            app:destination="@id/tumblrFragment"
-            app:enterAnim="@anim/from_left" />
     </fragment>
     <fragment
         android:id="@+id/moreFragment"
@@ -21,8 +17,8 @@
         android:name="com.example.plasticx.main.profilefragment.ProfileFragment"
         android:label="ProfileFragment" />
     <fragment
-        android:id="@+id/tumblrFragment"
-        android:name="com.example.plasticx.main.listfragment.TumblrFragment"
-        android:label="TumblrFragment" >
+        android:id="@+id/tumblerFragment"
+        android:name="com.example.plasticx.main.listfragment.TumblerFragment"
+        android:label="TumblerFragment" >
     </fragment>
 </navigation>

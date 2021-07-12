@@ -47,6 +47,14 @@ class RetrofitRepository {
             .observeOn(AndroidSchedulers.mainThread())
             .filter { it.asJsonObject.get("RESULT").asString == "200" } // 유저 정보 확인 성공
 
+    fun getUserTumblerList(userId: String) : Observable<JsonElement> =
+        retrofitBase
+            .create(InUserRetrofit::class.java)
+            .userTumblerList(userId)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+
+
     fun borrowTumblerRx(tumblerId: String): Flowable<JsonElement> =
         retrofitBase
             .create(InTumblerRetrofit::class.java)

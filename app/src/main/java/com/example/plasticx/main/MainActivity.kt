@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.plasticx.MyApplication
 import com.example.plasticx.R
 import com.example.plasticx.base.BaseActivity
+import com.example.plasticx.dagger.di.AppComponent
 import com.example.plasticx.databinding.ActivityMainBinding
 import com.example.plasticx.qr.QrActivity
 
@@ -19,11 +21,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
             = ActivityMainBinding::inflate
 
+    lateinit var mainComponent: AppComponent
+
     override fun setup() {
         setupViews()
         binding.bottomNavigationView.background = null
         // 가운데 비우기 위한 아이템 비활성화
         binding.bottomNavigationView.menu.getItem(2).isEnabled = false
+
+        // dagger
+        mainComponent = (application as MyApplication).appComponent
+        mainComponent.inject(this)
 
         val navHostFragment= supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController

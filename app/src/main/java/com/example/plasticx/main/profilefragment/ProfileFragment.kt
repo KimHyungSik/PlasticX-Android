@@ -43,6 +43,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
               .subscribe {
                   val body = it.asJsonObject
                   binding.userName.text = body.get("name").asString + " 님"
+                  binding.userDeposit.text = body.get("deposit").asString + "원"
               }.isDisposed
         }
 

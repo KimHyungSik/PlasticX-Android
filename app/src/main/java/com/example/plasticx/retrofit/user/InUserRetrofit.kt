@@ -4,6 +4,7 @@ import com.example.plasticx.model.LoginUser
 import com.example.plasticx.model.RegisterUser
 import com.google.gson.JsonElement
 import io.reactivex.Flowable
+import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -26,4 +27,10 @@ interface InUserRetrofit {
     fun userInfo(
         @Path("user_id") userId: String
     ): Flowable<JsonElement>
+
+    @Headers("Content-Type: application/json")
+    @GET("api/user/list/{user_id}")
+    fun userTumblerList(
+        @Path("user_id") userId: String
+    ): Observable<JsonElement>
 }
