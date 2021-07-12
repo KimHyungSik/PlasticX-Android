@@ -26,12 +26,10 @@ class TumblerRecyclerHolder(itemView : View, inRecyclerView: InTumblerRecycler) 
     fun bindWithView(tumblerItem: TumblerItem) {
         tumblerName.text = tumblerItem.tumblerName
         tumblerDay.text = tumblerItem.tumblerDay
-        if(tumblerItem.imageUrl != "") {
-            Glide.with(MyApplication.instance)
-                .load(tumblerItem.imageUrl)
-                .placeholder(R.drawable.base_tumbler_icon)
-                .into(imageView)
-        }
+        Glide.with(MyApplication.instance)
+            .load(tumblerItem.imageUrl)
+            .placeholder(R.drawable.base_tumbler_icon)
+            .into(imageView)
     }
 
 }

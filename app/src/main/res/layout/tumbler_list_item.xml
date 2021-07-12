@@ -3,12 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginVertical="14dp"
+    android:padding="7dp"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="65dp"
         android:layout_height="65dp"
         app:cardCornerRadius="22dp"
+        android:layout_marginRight="25dp"
         >
        <ImageView
            android:id="@+id/tumbler_list_image"

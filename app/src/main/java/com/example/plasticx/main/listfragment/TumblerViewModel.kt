@@ -11,7 +11,5 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
     
     fun getTumblerList() = retrofitRepository
         .getUserTumblerList(UserManagerObject.userId)
-        .subscribe{
-            Log.d(TAG, "getTumblerList: $it")
-        }.isDisposed
+
 }

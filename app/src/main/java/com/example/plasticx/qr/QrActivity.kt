@@ -48,7 +48,7 @@ class QrActivity : BaseActivity<ActivityQrBinding>() {
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
             runOnUiThread {
-                Toast.makeText(this, "Camera initialization error: ${it.message}",
+                Toast.makeText(this, "QR인식 실패",
                     Toast.LENGTH_LONG).show()
             }
         }
