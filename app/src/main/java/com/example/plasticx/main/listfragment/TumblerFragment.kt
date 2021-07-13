@@ -30,7 +30,7 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
             adapter = tumblerRecyclerAdapter
         }
 
-        (activity as MainActivity).mainComponent.inject(this)
+        (activity as MainActivity).mainComponent.mainComponent().create().inject(this)
 
         (activity as MainActivity).showLoadingAni()
         viewModel.getTumblerList()

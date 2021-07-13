@@ -31,7 +31,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         // dagger
         mainComponent = (application as MyApplication).appComponent
-        mainComponent.inject(this)
+        mainComponent.mainComponent().create().inject(this)
 
         val navHostFragment= supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
