@@ -1,9 +1,11 @@
 package com.example.plasticx.dagger.subcomponent
 
+import com.example.plasticx.dagger.annotation.MainActivityScope
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.main.listfragment.TumblerFragment
 import dagger.Subcomponent
 
+@MainActivityScope
 @Subcomponent
 interface MainSubComponent {
 
