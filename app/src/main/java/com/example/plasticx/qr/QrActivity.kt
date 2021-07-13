@@ -38,13 +38,14 @@ class QrActivity : BaseActivity<ActivityQrBinding>() {
 
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
+            codeScanner.stopPreview()
             runOnUiThread {
                 viewModel.borrowTumbler(it.text) {
                     setResult(RESULT_OK)
                     finish()
                 }
-                codeScanner.stopPreview()
             }
+            codeScanner.startPreview()
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
             runOnUiThread {
