@@ -16,7 +16,6 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
     override fun getViewBinding(): TumblrFragmentBinding  = TumblrFragmentBinding.inflate(layoutInflater)
 
     private lateinit var tumblerRecyclerAdapter: TumblerRecyclerAdapter
-    private var tumblerList = ArrayList<TumblerItem>()
 
     @Inject
     lateinit var viewModel: TumblerViewModel
@@ -34,20 +33,10 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
 
         (activity as MainActivity).showLoadingAni()
         viewModel.getTumblerList()
-            .map { it.asJsonObject }
             .subscribe (
                 {
-                    Log.d(TAG, "setUpViews: $it")
-                    for (n in it.get("tumbler_id").asJsonArray) {
-                        val tumblerItem = TumblerItem(
-                            "",
-                            "텀블러",
-                            "기간 : 00-00"
-                        )
-                        tumblerList.add(tumblerItem)
-                        tumblerRecyclerAdapter.submitList(tumblerList)
+                        tumblerRecyclerAdapter.submitList(it)
                         tumblerRecyclerAdapter.notifyDataSetChanged()
-                    }
                 },
                 {},
                 {(activity as MainActivity).dismissLoadingAni()}
