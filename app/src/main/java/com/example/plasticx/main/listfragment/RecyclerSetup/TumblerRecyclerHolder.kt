@@ -25,7 +25,7 @@ class TumblerRecyclerHolder(itemView : View, inRecyclerView: InTumblerRecycler) 
 
     fun bindWithView(tumblerItem: TumblerItem) {
         tumblerName.text = tumblerItem.tumblerName
-        tumblerDay.text = tumblerItem.tumblerDay
+        tumblerDay.text = tumblerItem.tumblerStartDay + '-' + tumblerItem.tumblerEndDay
         Glide.with(MyApplication.instance)
             .load(tumblerItem.imageUrl)
             .placeholder(R.drawable.base_tumbler_icon)

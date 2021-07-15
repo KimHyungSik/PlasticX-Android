@@ -1,5 +1,6 @@
 package com.example.plasticx.main.listfragment
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.plasticx.dagger.annotation.MainActivityScope
 import com.example.plasticx.model.TumblerItem
@@ -7,23 +8,33 @@ import com.example.plasticx.retrofit.repository.RetrofitRepository
 import com.example.plasticx.user.UserManagerObject
 import com.google.gson.JsonObject
 import io.reactivex.Observable
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @MainActivityScope
 class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepository) {
 
     val TAG = "TumblerViewModel - 로그"
+    @SuppressLint("SimpleDateFormat")
+    val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
 
     private var tumblerList = ArrayList<TumblerItem>()
     fun getTumblerList(): Observable<ArrayList<TumblerItem>> = retrofitRepository
         .getUserTumblerList(UserManagerObject.userId)
         .map { it.asJsonObject }
         .map {
-            for (n in it.get("tumbler_id").asJsonArray) {
+            for (n in it.get("tumblers").asJsonArray) {
+                val jsonObject = n.asJsonObject
+                val date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
                 val tumblerItem = TumblerItem(
                     "",
-                    "텀블러",
-                    "기간 : 00-00"
+                    jsonObject.get("model").asString,
+                    date!!.toString(),
+                    date!!.toString()
                 )
                 tumblerList.add(tumblerItem)
             }
