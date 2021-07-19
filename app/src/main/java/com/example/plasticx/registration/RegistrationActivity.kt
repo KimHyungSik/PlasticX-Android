@@ -95,7 +95,9 @@ class RegistrationActivity : BaseLoginActivity<ActivityRegistrationBinding>() {
                     setResult(RESULT_OK)
                     finish()
                 }
-                RESPONSE_STATE.FAIL -> {binding.registrationEmailLayout.error = "이미 존재하는 이메일 입니다."}
+                RESPONSE_STATE.FAIL -> {
+                    binding.registrationEmailLayout.error = "이미 존재하는 이메일 입니다."
+                }
                 else -> {}
             }
         })

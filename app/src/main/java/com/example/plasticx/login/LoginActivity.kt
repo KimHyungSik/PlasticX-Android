@@ -38,6 +38,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
     private fun setupViews() {
         (application as MyApplication).appComponent.inject(this)
         loginViewModel = ViewModelProvider(this, retrofitFactory).get(LoginViewModel::class.java)
+        loginViewModel._loginStatu.postValue(RESPONSE_STATE.NOTTHING)
 
         binding.singupBtn.setOnClickListener {
             moveIntentResult(RegistrationActivity::class.java)
