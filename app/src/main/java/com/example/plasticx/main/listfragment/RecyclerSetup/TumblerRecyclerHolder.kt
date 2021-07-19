@@ -1,5 +1,6 @@
 package com.example.plasticx.main.listfragment.RecyclerSetup
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,9 +24,10 @@ class TumblerRecyclerHolder(itemView : View, inRecyclerView: InTumblerRecycler) 
     override fun onClick(v: View?) {
     }
 
+    @SuppressLint("SetTextI18n")
     fun bindWithView(tumblerItem: TumblerItem) {
-        tumblerName.text = tumblerItem.tumblerName
-        tumblerDay.text = tumblerItem.tumblerStartDay + '-' + tumblerItem.tumblerEndDay
+        tumblerName.text = if(tumblerItem.tumblerName == "")  "텀블러" else tumblerItem.tumblerName
+        tumblerDay.text = tumblerItem.tumblerStartDay + " ~ " + tumblerItem.tumblerEndDay
         Glide.with(MyApplication.instance)
             .load(tumblerItem.imageUrl)
             .placeholder(R.drawable.base_tumbler_icon)

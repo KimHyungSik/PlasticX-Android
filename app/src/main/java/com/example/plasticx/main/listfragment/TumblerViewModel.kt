@@ -20,7 +20,7 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
 
     val TAG = "TumblerViewModel - 로그"
     @SuppressLint("SimpleDateFormat")
-    val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
     private var tumblerList = ArrayList<TumblerItem>()
     fun getTumblerList(): Observable<ArrayList<TumblerItem>> = retrofitRepository
@@ -29,12 +29,13 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
         .map {
             for (n in it.get("tumblers").asJsonArray) {
                 val jsonObject = n.asJsonObject
+                Log.d(TAG, "getTumblerList: $jsonObject")
                 val date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
                 val tumblerItem = TumblerItem(
                     "",
                     jsonObject.get("model").asString,
-                    date!!.toString(),
-                    date!!.toString()
+                    date.month.toString() + '.' + date.day.toString(),
+                    date.month.toString() + '.' + (date.day+7).toString()
                 )
                 tumblerList.add(tumblerItem)
             }
