@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.example.plasticx.loading.LottieLoadingDialog
@@ -19,6 +22,11 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
 
     private var lastTimeBackPressed : Long = 0
     private lateinit var loading : LottieLoadingDialog
+
+
+    val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
+    ) { activityResult -> resultActivity(activityResult)}
 
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
@@ -52,6 +60,12 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // 리턴 값을 가지는 화면 이동
+    open fun moveIntentResult(activity: Class<*>){
+        val intent = Intent(this, activity)
+        requestActivity.launch(intent)
+    }
+
 
     override fun onBackPressed() {
         if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
@@ -69,6 +83,10 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
         loading.dismiss()
     }
 
+    // 리턴 값을 가지고 반환된 액티비티 설정
+    open fun resultActivity(activityResult: ActivityResult) {
+
+    }
 
 }
 

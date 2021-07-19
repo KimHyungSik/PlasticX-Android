@@ -3,6 +3,7 @@ package com.example.plasticx.login
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.plasticx.MyApplication
@@ -39,7 +40,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
         loginViewModel = ViewModelProvider(this, retrofitFactory).get(LoginViewModel::class.java)
 
         binding.singupBtn.setOnClickListener {
-            moveIntentAllClear(RegistrationActivity::class.java)
+            moveIntentResult(RegistrationActivity::class.java)
         }
 
         binding.loginBtn.setOnClickListener {
@@ -87,6 +88,15 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
             }
         }
     }
+
+
+    override fun resultActivity(activityResult: ActivityResult) {
+        super.resultActivity(activityResult)
+        if (activityResult.resultCode == RESULT_OK) {
+            Toast.makeText(this, "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show()
+        }
+    }
+
 
     private fun setupViewModel(){
         loginViewModel._loading.observe(this, {

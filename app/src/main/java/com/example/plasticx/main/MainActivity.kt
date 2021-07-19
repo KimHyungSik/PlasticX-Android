@@ -16,10 +16,10 @@ import com.example.plasticx.qr.QrActivity
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     val TAG = "MainActivity - 로그"
-    private var lastTimeBackPressed : Long = 0
+    private var lastTimeBackPressed: Long = 0
 
-    override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
-            = ActivityMainBinding::inflate
+    override val bindingInflater: (LayoutInflater) -> ActivityMainBinding =
+        ActivityMainBinding::inflate
 
     lateinit var mainComponent: AppComponent
 
@@ -33,12 +33,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         mainComponent = (application as MyApplication).appComponent
         mainComponent.mainComponent().create().inject(this)
 
-        val navHostFragment= supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
     }
 
-    private fun setupViews(){
+    private fun setupViews() {
         binding.mainBottomFab.setOnClickListener {
             moveIntentResult(QrActivity::class.java)
         }
@@ -46,13 +47,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun resultActivity(activityResult: ActivityResult) {
         super.resultActivity(activityResult)
-        Log.d(TAG, "resultActivity: $activityResult")
+        if (activityResult.resultCode == RESULT_OK) {
+            Toast.makeText(this, "텀블러 대여 성공", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onBackPressed() {
-        if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
+        if (System.currentTimeMillis() - lastTimeBackPressed >= 1500) {
             lastTimeBackPressed = System.currentTimeMillis()
-            Toast.makeText(this,"'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG).show()
         } else {
             finish()
         }

@@ -7,6 +7,7 @@ import com.example.plasticx.base.BaseLoginActivity
 import com.example.plasticx.dagger.viewmodelFactory.RetrofitFactory
 import com.example.plasticx.databinding.ActivityRegistrationBinding
 import com.example.plasticx.loading.LottieLoadingDialog
+import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.utils.RESPONSE_STATE
 import javax.inject.Inject
@@ -90,7 +91,10 @@ class RegistrationActivity : BaseLoginActivity<ActivityRegistrationBinding>() {
 
         registrationViewModel._registerStatu.observe(this, {
             when(it){
-                RESPONSE_STATE.OK -> {moveIntentAllClear(MainActivity::class.java)}
+                RESPONSE_STATE.OK -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
                 RESPONSE_STATE.FAIL -> {binding.registrationEmailLayout.error = "이미 존재하는 이메일 입니다."}
                 else -> {}
             }
