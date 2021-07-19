@@ -22,7 +22,7 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
     @SuppressLint("SimpleDateFormat")
     val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
-    private var tumblerList = ArrayList<TumblerItem>()
+    var tumblerList = ArrayList<TumblerItem>()
     fun getTumblerList(): Observable<ArrayList<TumblerItem>> = retrofitRepository
         .getUserTumblerList(UserManagerObject.userId)
         .map { it.asJsonObject }

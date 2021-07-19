@@ -3,6 +3,7 @@ package com.example.plasticx.main.listfragment.RecyclerSetup
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,16 +13,19 @@ import com.example.plasticx.model.TumblerItem
 
 class TumblerRecyclerHolder(itemView : View, inRecyclerView: InTumblerRecycler) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
-    val imageView = itemView.findViewById<ImageView>(R.id.tumbler_list_image)!!
-    val tumblerName = itemView.findViewById<TextView>(R.id.tumbler_list_tumbler_name)!!
-    val tumblerDay = itemView.findViewById<TextView>(R.id.tumbler_list_tumbler_day)!!
-    var inRecyclerView : InTumblerRecycler? = null
+    private val imageView = itemView.findViewById<ImageView>(R.id.tumbler_list_image)!!
+    private val tumblerName = itemView.findViewById<TextView>(R.id.tumbler_list_tumbler_name)!!
+    private val tumblerDay = itemView.findViewById<TextView>(R.id.tumbler_list_tumbler_day)!!
+    private val tumblerListViewItem: LinearLayout = itemView.findViewById<LinearLayout>(R.id.tumbler_list_view_item)
+    private var inRecyclerView : InTumblerRecycler? = null
 
     init{
         this.inRecyclerView = inRecyclerView
+        this.tumblerListViewItem.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
+        this.inRecyclerView?.onClickedItem(adapterPosition)
     }
 
     @SuppressLint("SetTextI18n")

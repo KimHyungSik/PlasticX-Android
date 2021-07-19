@@ -44,5 +44,6 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
     }
 
     override fun onClickedItem(position: Int) {
+        Log.d(TAG, "onClickedItem: ${viewModel.tumblerList[position]}")
     }
 }
