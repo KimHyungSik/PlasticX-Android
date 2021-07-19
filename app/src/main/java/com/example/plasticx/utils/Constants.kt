@@ -6,6 +6,7 @@ object Utility{
     const val USER_ID_KEY = "PLASTICX"
 }
 
+// http통신 결과
 enum class RESPONSE_STATE{
     OK,
     FAIL,
@@ -14,6 +15,7 @@ enum class RESPONSE_STATE{
     SERVER_ERROR
 }
 
+// 현재 로그인 상태
 enum class LOGIN_STATE{
     NO,
     KAKAO,

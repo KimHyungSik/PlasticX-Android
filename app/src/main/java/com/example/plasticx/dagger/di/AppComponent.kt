@@ -22,5 +22,6 @@ interface AppComponent {
     fun inject(activity: RegistrationActivity)
     fun inject(activity: LoginActivity)
     fun inject(activity: QrActivity)
+    // 메인 액티비티의 fragment 의존성 주입
     fun mainComponent(): MainSubComponent.Factory
 }

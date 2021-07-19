@@ -12,6 +12,7 @@ import com.example.plasticx.loading.LottieLoadingDialog
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.user.UserManagerObject
 
+// 로그인 이후 사용하는 베이스 액티비티
 abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
@@ -35,6 +36,7 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         setup()
     }
 
+    // 최초 액티비티 설정 시 사
     abstract fun setup()
 
     override fun onDestroy() {
@@ -49,6 +51,7 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         }
     }
 
+    // 액티비티 스택을 모두 제거 후 화면 이동
     open fun moveIntentAllClear(activity: Class<*>) {
         val intent = Intent(this, activity)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -57,16 +60,19 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // 화면 이동
     open fun moveIntent(activity: Class<*>) {
         val intent = Intent(this, activity)
         startActivity(intent)
     }
 
+    // 리턴 값을 가지는 화면 이동
     open fun moveIntentResult(activity: Class<*>){
         val intent = Intent(this, activity)
         requestActivity.launch(intent)
     }
 
+    // 리턴 값을 가지고 반환된 액티비티 설정
     open fun resultActivity(activityResult: ActivityResult) {
 
     }

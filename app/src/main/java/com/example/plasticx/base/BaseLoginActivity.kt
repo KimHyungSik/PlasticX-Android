@@ -12,6 +12,7 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
 
+// 로그인이전 사용하는 베이스 액티비티
 abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB

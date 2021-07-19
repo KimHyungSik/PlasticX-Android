@@ -35,10 +35,12 @@ class RetrofitRepository {
         .build()
 
 
+    // 유저 Retrofit 매니저 전체 반환
     fun userRepository(): UserRetrofitManager {
         return UserRetrofitManager.instance
     }
 
+    // 유저 정보 확인
     fun getUserRxInfo(userId: String): Flowable<JsonElement> =
         retrofitBase
             .create(InUserRetrofit::class.java)
@@ -47,6 +49,7 @@ class RetrofitRepository {
             .observeOn(AndroidSchedulers.mainThread())
             .filter { it.asJsonObject.get("RESULT").asString == "200" } // 유저 정보 확인 성공
 
+    // 유저가 빌린 텀블러 리스트 확인
     fun getUserTumblerList(userId: String) : Observable<JsonElement> =
         retrofitBase
             .create(InUserRetrofit::class.java)

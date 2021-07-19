@@ -37,6 +37,7 @@ abstract class BaseFragment<VB: ViewBinding> : Fragment() {
 
     open fun observeData() {}
 
+    // fragment 최초 설정
     private fun init() {
         binding = getViewBinding()
     }
