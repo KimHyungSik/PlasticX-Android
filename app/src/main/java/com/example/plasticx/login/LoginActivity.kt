@@ -62,8 +62,10 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
 
             if(flag){
                 loginViewModel.login(
+                    null,
                     binding.loginEmailText.text.toString(),
-                    binding.loginPasswordText.text.toString()
+                    binding.loginPasswordText.text.toString(),
+                    LOGIN_STATE.LOCAL
                 )
             }
         }
@@ -74,10 +76,17 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
                 Log.e(TAG, "로그인 실패", error)
             } else if (token != null) {
                 Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                UserApiClient.instance.accessTokenInfo { tokenInfo, _ ->
+                UserApiClient.instance.me { user, error ->
                     // 로그인 상태
-                    UserManagerObject.setUpUser(tokenInfo!!.id.toString(), LOGIN_STATE.KAKAO)
-                    moveIntentAllClear(MainActivity::class.java)
+                    var tokenID = user!!.id.toString()
+                    UserManagerObject.setUpUser(tokenID, LOGIN_STATE.KAKAO)
+                    while (tokenID.length < 24) tokenID += '0'
+                    loginViewModel.login(
+                        tokenID,
+                        user.kakaoAccount!!.email.toString(),
+                        "000000",
+                        LOGIN_STATE.KAKAO
+                    )
                 }
             }
         }

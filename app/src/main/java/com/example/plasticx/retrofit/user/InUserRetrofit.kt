@@ -1,5 +1,6 @@
 package com.example.plasticx.retrofit.user
 
+import com.example.plasticx.model.KakaoLoginUser
 import com.example.plasticx.model.LoginUser
 import com.example.plasticx.model.RegisterUser
 import com.google.gson.JsonElement
@@ -21,6 +22,13 @@ interface InUserRetrofit {
     fun userLogin(
         @Body body: LoginUser
     ): Call<JsonElement>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/user/login")
+    fun userLogin(
+        @Body body: KakaoLoginUser
+    ): Call<JsonElement>
+
 
     @Headers("Content-Type: application/json")
     @GET("api/user/info/{user_id}")

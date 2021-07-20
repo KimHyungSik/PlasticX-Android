@@ -15,10 +15,10 @@ class LoginViewModel @Inject constructor(val retrofitRepository: RetrofitReposit
     var _loading: MutableLiveData<Boolean> = MutableLiveData()
     var _loginStatu: MutableLiveData<RESPONSE_STATE> = MutableLiveData()
 
-    fun login(email: String, password: String){
+    fun login(_id:String?, email: String, password: String, loginState: LOGIN_STATE){
         _loading.postValue(true)
 
-        retrofitRepository.userRepository().userLogin(email, password, completion = {
+        retrofitRepository.userRepository().userLogin(_id, email, password, loginState, completion = {
             _responseState, s->
             when(_responseState){
                 RESPONSE_STATE.OK->{
