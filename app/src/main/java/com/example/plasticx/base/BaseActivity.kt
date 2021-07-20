@@ -13,18 +13,13 @@ import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.user.UserManagerObject
 
 // 로그인 이후 사용하는 베이스 액티비티
-abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewBinding>() : BaseSetupActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
-    val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
-    ) { activityResult -> resultActivity(activityResult)}
-
 
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
         get() = _binding as VB
-    private lateinit var loading : LottieLoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,39 +44,6 @@ abstract class BaseActivity<VB : ViewBinding>() : AppCompatActivity() {
         if(UserManagerObject.userId.isEmpty()){
             moveIntentAllClear(LoginActivity::class.java)
         }
-    }
-
-    // 액티비티 스택을 모두 제거 후 화면 이동
-    open fun moveIntentAllClear(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-    }
-
-    // 화면 이동
-    open fun moveIntent(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        startActivity(intent)
-    }
-
-    // 리턴 값을 가지는 화면 이동
-    open fun moveIntentResult(activity: Class<*>){
-        val intent = Intent(this, activity)
-        requestActivity.launch(intent)
-    }
-
-    // 리턴 값을 가지고 반환된 액티비티 설정
-    open fun resultActivity(activityResult: ActivityResult) {
-
-    }
-
-    open fun showLoadingAni(){
-        loading.show()
-    }
-    open fun dismissLoadingAni(){
-        loading.dismiss()
     }
 
 

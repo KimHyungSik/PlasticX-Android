@@ -16,16 +16,10 @@ import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
 
 // 로그인이전 사용하는 베이스 액티비티
-abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
-    private var _binding: ViewBinding? = null
+abstract class BaseLoginActivity<VB : ViewBinding>() : BaseSetupActivity() {
+    open var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
 
-    private lateinit var loading : LottieLoadingDialog
-
-
-    val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult() // ◀ StartActivityForResult 처리를 담당
-    ) { activityResult -> resultActivity(activityResult)}
 
     @Suppress("UNCHECKED_CAST")
     protected val binding: VB
@@ -44,37 +38,6 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    open fun moveIntentAllClear(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-    }
-
-    open fun moveIntent(activity: Class<*>) {
-        val intent = Intent(this, activity)
-        startActivity(intent)
-    }
-
-    // 리턴 값을 가지는 화면 이동
-    open fun moveIntentResult(activity: Class<*>){
-        val intent = Intent(this, activity)
-        requestActivity.launch(intent)
-    }
-
-    open fun showLoadingAni(){
-        loading.show()
-    }
-    open fun dismissLoadingAni(){
-        loading.dismiss()
-    }
-
-    // 리턴 값을 가지고 반환된 액티비티 설정
-    open fun resultActivity(activityResult: ActivityResult) {
-
     }
 
 }

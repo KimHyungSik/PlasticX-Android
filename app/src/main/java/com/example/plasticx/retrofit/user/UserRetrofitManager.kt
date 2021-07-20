@@ -101,6 +101,7 @@ class UserRetrofitManager {
                                     }
                                 }
                             }
+
                             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
                                 toast("서버와 연결에 실패 하였습니다.")
                                 completion(RESPONSE_STATE.SERVER_ERROR, null)
