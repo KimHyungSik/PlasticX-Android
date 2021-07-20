@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.plasticx.databinding.ActivityIntroLoadingBinding
+import com.example.plasticx.firebase.MyFirebaseMessagingService
 import com.example.plasticx.login.LoginActivity
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.user.UserManagerObject
@@ -47,6 +48,10 @@ class IntroLoadingActivity : AppCompatActivity() {
         GlobalScope.launch {
             delay(900)
             permissions()
+        }
+        
+        MyFirebaseMessagingService().getToken {
+            Log.d(TAG, "onCreate: $it")
         }
     }
 

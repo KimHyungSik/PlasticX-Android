@@ -37,36 +37,34 @@ class UserRetrofitManager {
 
         Observable.just(registerUser)
             .subscribeOn(Schedulers.io())
-            .map { item ->
-                MyFirebaseMessagingService().getToken {
-                    item.firebaseToken = it
-                }
-            }
-            .subscribe{
-            UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
-                ?.userRegister(registerUser)
-                ?.enqueue(object : retrofit2.Callback<JsonElement> {
-                    override fun onResponse(
-                        call: Call<JsonElement>,
-                        response: Response<JsonElement>
-                    ) {
-                        response.body()?.let {
-                            val body = it.asJsonObject
-                            if (body.get("RESULT").asString == "200") {
-                                completion(RESPONSE_STATE.OK, body.get("user_id").asString)
-                            } else {
-                                completion(RESPONSE_STATE.FAIL, body.get("RESULT").asString)
+            .subscribe {
+                MyFirebaseMessagingService().getToken { token ->
+                    it.fcm_token = token
+                    UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
+                        ?.userRegister(it)
+                        ?.enqueue(object : retrofit2.Callback<JsonElement> {
+                            override fun onResponse(
+                                call: Call<JsonElement>,
+                                response: Response<JsonElement>
+                            ) {
+                                response.body()?.let {
+                                    val body = it.asJsonObject
+                                    if (body.get("RESULT").asString == "200") {
+                                        completion(RESPONSE_STATE.OK, body.get("user_id").asString)
+                                    } else {
+                                        completion(RESPONSE_STATE.FAIL, body.get("RESULT").asString)
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                        toast("서버와 연결에 실패 하였습니다.")
-                        completion(RESPONSE_STATE.SERVER_ERROR, null)
-                    }
+                            override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                                toast("서버와 연결에 실패 하였습니다.")
+                                completion(RESPONSE_STATE.SERVER_ERROR, null)
+                            }
 
-                })
-        }.isDisposed
+                        })
+                }
+            }.isDisposed
     }
 
     fun userLogin(
@@ -75,39 +73,42 @@ class UserRetrofitManager {
         completion: (RESPONSE_STATE, String?) -> Unit
     ) {
 
-        var loginUser = LoginUser(email, password, "")
+        val loginUser = LoginUser(email, password, "")
 
         Observable.just(loginUser)
             .subscribeOn(Schedulers.io())
-            .map { item ->
-                MyFirebaseMessagingService().getToken {
-                    item.firebaseToken = it
-                }
-            }.subscribe{
-                UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
-                    ?.userLogin(loginUser)
-                    ?.enqueue(object : retrofit2.Callback<JsonElement> {
-                        override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                            response.body()?.let {
-                                val body = it.asJsonObject
-                                Log.d(TAG, "onResponse: $body")
-                                if (body.get("RESULT").asString == "200") {
-                                    completion(RESPONSE_STATE.OK, body.get("user_id").asString)
-                                } else {
-                                    completion(RESPONSE_STATE.ERROR, body.get("RESULT").asString)
+            .subscribe {
+                Log.d(TAG, "userLogin: $loginUser")
+                MyFirebaseMessagingService().getToken { token ->
+                    it.fcm_token = token
+                    UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
+                        ?.userLogin(it)
+                        ?.enqueue(object : retrofit2.Callback<JsonElement> {
+                            override fun onResponse(
+                                call: Call<JsonElement>,
+                                response: Response<JsonElement>
+                            ) {
+                                response.body()?.let {
+                                    val body = it.asJsonObject
+                                    Log.d(TAG, "onResponse: $body")
+                                    if (body.get("RESULT").asString == "200") {
+                                        completion(RESPONSE_STATE.OK, body.get("user_id").asString)
+                                    } else {
+                                        completion(
+                                            RESPONSE_STATE.ERROR,
+                                            body.get("RESULT").asString
+                                        )
+                                    }
                                 }
                             }
-                        }
-
-                        override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                            toast("서버와 연결에 실패 하였습니다.")
-                            completion(RESPONSE_STATE.SERVER_ERROR, null)
-                        }
-
-                    })
+                            override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                                toast("서버와 연결에 실패 하였습니다.")
+                                completion(RESPONSE_STATE.SERVER_ERROR, null)
+                            }
+                        })
+                }
             }.isDisposed
     }
-
 
 
     private fun toast(massage: String) {

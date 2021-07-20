@@ -22,6 +22,7 @@ import javax.inject.Inject
 class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
 
     private val TAG = "LoginActivity - 로그"
+    private var lastTimeBackPressed : Long = 0
 
     override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding =
         ActivityLoginBinding::inflate
@@ -121,5 +122,14 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
                 }
             }
         })
+    }
+
+    override fun onBackPressed() {
+        if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
+            lastTimeBackPressed = System.currentTimeMillis()
+            Toast.makeText(this,"'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_LONG).show()
+        } else {
+            finish()
+        }
     }
 }

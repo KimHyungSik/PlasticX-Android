@@ -20,7 +20,6 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater) -> VB
 
-    private var lastTimeBackPressed : Long = 0
     private lateinit var loading : LottieLoadingDialog
 
 
@@ -64,16 +63,6 @@ abstract class BaseLoginActivity<VB : ViewBinding>() : AppCompatActivity() {
     open fun moveIntentResult(activity: Class<*>){
         val intent = Intent(this, activity)
         requestActivity.launch(intent)
-    }
-
-
-    override fun onBackPressed() {
-        if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
-            lastTimeBackPressed = System.currentTimeMillis()
-            Toast.makeText(this,"'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_LONG).show()
-        } else {
-            finish()
-        }
     }
 
     open fun showLoadingAni(){

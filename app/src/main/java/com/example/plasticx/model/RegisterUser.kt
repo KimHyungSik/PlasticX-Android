@@ -6,5 +6,5 @@ data class RegisterUser(
     @SerializedName("name") var name: String,
     @SerializedName("email") var email: String,
     @SerializedName("password") var password: String,
-    @SerializedName("Token") var firebaseToken: String
+    @SerializedName("fcm_token") var fcm_token: String
 )

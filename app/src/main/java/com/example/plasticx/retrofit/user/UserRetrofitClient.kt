@@ -83,8 +83,8 @@ object UserRetrofitClient {
     fun getClient(baseUrl: String): Retrofit? {
 
         // 인터럽트 추가
-        // client.addInterceptor(loggingInterceptor)
-        // client.addNetworkInterceptor(interceptor)
+        client.addInterceptor(loggingInterceptor)
+        client.addNetworkInterceptor(interceptor)
 
         val gson = GsonBuilder().setLenient().create()
 
