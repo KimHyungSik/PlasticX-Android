@@ -65,7 +65,10 @@ class IntroLoadingActivity : AppCompatActivity() {
                 }
                 else {
                     // 로그인 상태
-                    UserManagerObject.setUpUser(tokenInfo!!.id.toString(), LOGIN_STATE.KAKAO)
+                    var tokenID = tokenInfo!!.id.toString()
+                    UserManagerObject.setUpUser(tokenID, LOGIN_STATE.KAKAO)
+                    while (tokenID.length < 24) tokenID += '0'
+                    UserManagerObject.setUpUser(tokenID, LOGIN_STATE.KAKAO)
                     moveIntentAllClear(MainActivity::class.java)
                 }
             }

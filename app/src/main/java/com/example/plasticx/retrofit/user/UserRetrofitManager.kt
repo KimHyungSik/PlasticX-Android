@@ -70,7 +70,9 @@ class UserRetrofitManager {
             }.isDisposed
     }
 
-    fun userLogin(
+
+    // 두 종류의 로그인을 처리하기 위해 로그인 상태를 받는다
+   fun userLogin(
         _id: String?,
         email: String,
         password: String,

@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(val retrofitRepository: RetrofitReposit
                 RESPONSE_STATE.OK->{
                     _loginStatu.postValue(_responseState)
                     PreferencesManager.setString(MyApplication.instance, Utility.USER_ID_KEY, s!!)
-                    UserManagerObject.setUpUser(s, LOGIN_STATE.LOCAL)
+                    UserManagerObject.setUpUser(s, loginState)
                     _loading.postValue(false)
                 }
                 else ->  {

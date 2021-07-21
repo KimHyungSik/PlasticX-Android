@@ -22,14 +22,15 @@ import javax.inject.Inject
 class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
 
     private val TAG = "LoginActivity - 로그"
-    private var lastTimeBackPressed : Long = 0
+    private var lastTimeBackPressed: Long = 0
 
     override val bindingInflater: (LayoutInflater) -> ActivityLoginBinding =
         ActivityLoginBinding::inflate
 
     private lateinit var loginViewModel: LoginViewModel
 
-    @Inject lateinit var retrofitFactory: RetrofitFactory
+    @Inject
+    lateinit var retrofitFactory: RetrofitFactory
 
     override fun setup() {
         setupViews()
@@ -60,7 +61,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
                 binding.logindEmailLayout.error = ""
             }
 
-            if(flag){
+            if (flag) {
                 loginViewModel.login(
                     null,
                     binding.loginEmailText.text.toString(),
@@ -100,7 +101,6 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
         }
     }
 
-
     override fun resultActivity(activityResult: ActivityResult) {
         super.resultActivity(activityResult)
         if (activityResult.resultCode == RESULT_OK) {
@@ -109,11 +109,11 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
     }
 
 
-    private fun setupViewModel(){
+    private fun setupViewModel() {
         loginViewModel._loading.observe(this, {
-            if(it){
+            if (it) {
                 showLoadingAni()
-            }else{
+            } else {
                 dismissLoadingAni()
             }
         })
@@ -123,7 +123,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
                     loginViewModel._loginStatu.postValue(RESPONSE_STATE.NOTTHING)
                     moveIntentAllClear(MainActivity::class.java)
                 }
-                RESPONSE_STATE.NOTTHING  ->{
+                RESPONSE_STATE.NOTTHING -> {
 
                 }
                 else -> {
@@ -134,9 +134,9 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
     }
 
     override fun onBackPressed() {
-        if(System.currentTimeMillis() - lastTimeBackPressed >= 1500){
+        if (System.currentTimeMillis() - lastTimeBackPressed >= 1500) {
             lastTimeBackPressed = System.currentTimeMillis()
-            Toast.makeText(this,"'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_LONG).show()
         } else {
             finish()
         }

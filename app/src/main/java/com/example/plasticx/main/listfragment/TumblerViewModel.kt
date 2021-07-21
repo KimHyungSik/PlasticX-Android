@@ -1,6 +1,7 @@
 package com.example.plasticx.main.listfragment
 
 import android.annotation.SuppressLint
+import android.text.format.DateFormat
 import android.util.Log
 import com.example.plasticx.dagger.annotation.MainActivityScope
 import com.example.plasticx.model.TumblerItem
@@ -15,6 +16,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
+@Suppress("DEPRECATION", "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 @MainActivityScope
 class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepository) {
 
@@ -31,10 +33,12 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
                 val jsonObject = n.asJsonObject
                 Log.d(TAG, "getTumblerList: $jsonObject")
                 val date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
+                Log.d(TAG, "getTumblerList: ${DateFormat.format("M", date)}")
+                val startDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format("dd", date).toString()
                 val tumblerItem = TumblerItem(
                     "",
                     jsonObject.get("model").asString,
-                    date.month.toString() + '.' + date.day.toString(),
+                    startDay,
                     date.month.toString() + '.' + (date.day+7).toString()
                 )
                 tumblerList.add(tumblerItem)

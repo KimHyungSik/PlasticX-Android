@@ -36,6 +36,11 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                         .centerCrop()
                         .placeholder(R.drawable.ic_baseline_person_24)
                         .into(binding.avatarImageView)
+                    RetrofitRepository().getUserRxInfo(UserManagerObject.userId)
+                        .subscribe {
+                            val body = it.asJsonObject
+                            binding.userDeposit.text = body.get("deposit").asString + "원"
+                        }.isDisposed
                 }
             }
         }else{
