@@ -16,7 +16,8 @@ class TumblerRecyclerAdapter(inTumblerRecycler: InTumblerRecycler): RecyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TumblerRecyclerHolder {
-        return TumblerRecyclerHolder(LayoutInflater
+        return TumblerRecyclerHolder(
+            LayoutInflater
             .from(parent.context)
             .inflate(R.layout.tumbler_list_item, parent,false),
             this.iRecycler!!
@@ -28,11 +29,9 @@ class TumblerRecyclerAdapter(inTumblerRecycler: InTumblerRecycler): RecyclerView
         holder.bindWithView(dataItem)
     }
 
-    override fun getItemCount(): Int {
-        return tumblerlist.size
-    }
+    override fun getItemCount() = tumblerlist.size
 
-    fun submitList(tumblerlist: ArrayList<TumblerItem>){
-        this.tumblerlist = tumblerlist
+    fun submitList(tumblerList: ArrayList<TumblerItem>){
+        this.tumblerlist = tumblerList
     }
 }

@@ -25,6 +25,7 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
 
     override fun setUpViews() {
         super.setUpViews()
+        Log.d(TAG, "setUpViews: ")
         tumblerRecyclerAdapter = TumblerRecyclerAdapter(this)
 
         binding.tumblerListView.apply {

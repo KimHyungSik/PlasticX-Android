@@ -13,9 +13,8 @@ class ViewPagerAdapter
     var models: List<String>,
     var context: Context
 ) : RecyclerView.Adapter<ViewPagerAdapter.AdapterViewHolder>() {
-    override fun getItemCount(): Int {
-        return models.size ?: 0
-    }
+    override fun getItemCount() = models.size
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.viewpager_item_card, parent, false)

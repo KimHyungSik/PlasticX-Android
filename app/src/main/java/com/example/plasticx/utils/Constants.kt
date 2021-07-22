@@ -4,6 +4,7 @@ object Utility{
     const val CHANNEL_ID = "PlasticX_Channel"
     const val BASE_URL = "http://13.59.10.162/"
     const val USER_ID_KEY = "PLASTICX"
+    const val DATABASE_NAME = "PLASTICX-APP-DATABASE"
 }
 
 // http통신 결과

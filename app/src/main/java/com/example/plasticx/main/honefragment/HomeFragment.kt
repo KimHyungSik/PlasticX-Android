@@ -1,6 +1,7 @@
 package com.example.plasticx.main.honefragment
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.example.plasticx.R
@@ -9,9 +10,11 @@ import com.example.plasticx.databinding.HomeFragmentBinding
 import java.lang.Math.abs
 
 class HomeFragment : BaseFragment<HomeFragmentBinding>(){
+    val TAG = "HomeFragment - 로그"
     override fun getViewBinding(): HomeFragmentBinding = HomeFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews(){
+        Log.d(TAG, "setUpViews: ")
         val viewPager = binding.homeViewPager
         val models: MutableList<String> = mutableListOf()
 

@@ -5,16 +5,29 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.room.Room
+import com.example.plasticx.MyApplication
 import com.example.plasticx.R
 import com.example.plasticx.main.MainActivity
+import com.example.plasticx.model.NoticeModel
+import com.example.plasticx.room.AppDatabase
+import com.example.plasticx.room.RoomRepository
+import com.example.plasticx.room.notice.NoticeRepository
 import com.example.plasticx.utils.Utility.CHANNEL_ID
+import com.example.plasticx.utils.Utility.DATABASE_NAME
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.random.Random
+
 
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
@@ -24,7 +37,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
     override fun onNewToken(token: String) {
     }
 
-    fun getToken(callback: (String)->Unit){
+    fun getToken(callback: (String) -> Unit){
         var token = ""
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -40,8 +53,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         val title = remoteMessage.notification?.title
         val msg = remoteMessage.notification?.body
 
+        Log.d(TAG, "onMessageReceived: ")
+
         val intent = Intent(this, MainActivity::class.java)
         val notification_ID = Random.nextInt()
+
+        val notificationDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, DATABASE_NAME).build()
 
         //플래그 추가
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -51,6 +68,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         //다른 프로세스에서 권한 할당
         val contentIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
 
+        val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
@@ -58,9 +78,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(contentIntent)
             .setAutoCancel(true)
+            .setSound(uri)
             .build()
 
-        notificationManager.notify(notification_ID, builder)
+        Thread {
+            notificationManager.notify(notification_ID, builder)
+            CoroutineScope(Dispatchers.Default).launch {
+                notificationDatabase.noticeDao().insertNotice(
+                    NoticeModel(
+                        null,
+                        title!!,
+                        msg
+                    )
+                )
+            }
+        }.start()
+
     }
 
 }

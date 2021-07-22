@@ -1,17 +1,25 @@
 package com.example.plasticx.main
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.room.Room
 import com.example.plasticx.MyApplication
 import com.example.plasticx.R
 import com.example.plasticx.base.BaseActivity
 import com.example.plasticx.dagger.di.AppComponent
 import com.example.plasticx.databinding.ActivityMainBinding
+import com.example.plasticx.model.NoticeModel
 import com.example.plasticx.qr.QrActivity
+import com.example.plasticx.room.RoomRepository
+import com.example.plasticx.room.notice.NoticeRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -37,6 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
+
     }
 
     private fun setupViews() {

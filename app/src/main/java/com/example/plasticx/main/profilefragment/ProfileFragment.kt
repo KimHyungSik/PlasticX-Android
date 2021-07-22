@@ -22,6 +22,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
         ProfileFragmentBinding.inflate(layoutInflater)
 
     override fun setUpViews() {
+        Log.d(TAG, "setUpViews: ")
 
         // 카카오 정보로 프로필 생성
         if (UserManagerObject.loginState == LOGIN_STATE.KAKAO) {
