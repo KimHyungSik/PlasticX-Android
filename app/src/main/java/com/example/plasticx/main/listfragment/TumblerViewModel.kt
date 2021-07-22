@@ -28,9 +28,9 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
         .map {
             for (n in it.get("tumblers").asJsonArray) {
                 val jsonObject = n.asJsonObject
-                Log.d(TAG, "getTumblerList: $jsonObject")
+
                 var date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
-                Log.d(TAG, "getTumblerList: ${DateFormat.format("M", date)}")
+
                 val startDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format(
                     "dd",
                     date
