@@ -7,11 +7,8 @@ import com.example.plasticx.dagger.annotation.MainActivityScope
 import com.example.plasticx.model.TumblerItem
 import com.example.plasticx.retrofit.repository.RetrofitRepository
 import com.example.plasticx.user.UserManagerObject
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -32,15 +29,30 @@ class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepos
             for (n in it.get("tumblers").asJsonArray) {
                 val jsonObject = n.asJsonObject
                 Log.d(TAG, "getTumblerList: $jsonObject")
-                val date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
+                var date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
                 Log.d(TAG, "getTumblerList: ${DateFormat.format("M", date)}")
-                val startDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format("dd", date).toString()
+                val startDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format(
+                    "dd",
+                    date
+                ).toString()
+
+                val c = Calendar.getInstance()
+                c.time = date!!
+                c.add(Calendar.DATE, 7)
+                date =  c.time
+
+                val endDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format(
+                    "dd",
+                    date
+                ).toString()
+
                 val tumblerItem = TumblerItem(
                     "",
                     jsonObject.get("model").asString,
                     startDay,
-                    date.month.toString() + '.' + (date.day+7).toString()
+                    endDay
                 )
+
                 tumblerList.add(tumblerItem)
             }
             tumblerList
