@@ -50,6 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
         val title = remoteMessage.notification?.title
         val msg = remoteMessage.notification?.body
 
@@ -58,12 +59,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         val intent = Intent(this, MainActivity::class.java)
         val notification_ID = Random.nextInt()
 
-        val notificationDatabase = Room.databaseBuilder(applicationContext, AppDatabase::class.java, DATABASE_NAME).build()
+        val notificationDatabase = AppDatabase.getInstance(applicationContext)
 
         //플래그 추가
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val database = Room.databaseBuilder(applicationContext, AppDatabase::class.java, DATABASE_NAME).build()
 
         //다른 프로세스에서 권한 할당
         val contentIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
@@ -81,19 +83,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
             .setSound(uri)
             .build()
 
+        notificationManager.notify(notification_ID, builder)
         Thread {
-            notificationManager.notify(notification_ID, builder)
-            CoroutineScope(Dispatchers.Default).launch {
-                notificationDatabase.noticeDao().insertNotice(
-                    NoticeModel(
-                        null,
-                        title!!,
-                        msg
-                    )
-                )
-            }
+            val noticeModel = NoticeModel(null, title!!, msg)
+            //notificationDatabase.noticeDao().insertNotice(noticeModel)
+            database.noticeDao().insertNotice(noticeModel)
         }.start()
-
     }
-
 }
