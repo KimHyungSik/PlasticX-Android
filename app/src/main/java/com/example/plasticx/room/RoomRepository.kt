@@ -1,8 +1,9 @@
 package com.example.plasticx.room
 
 import com.example.plasticx.room.notice.NoticeRepository
+import javax.inject.Inject
 
-class RoomRepository(val noticeRepository: NoticeRepository) {
+class RoomRepository @Inject constructor (val noticeRepository: NoticeRepository) {
 
     companion object{
         private var instance: RoomRepository? = null

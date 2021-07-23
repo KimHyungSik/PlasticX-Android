@@ -16,7 +16,8 @@ import javax.inject.Singleton
     ViewModelFactoryModule::class,
     RepositoryModule::class,
     ViewModelModule::class,
-    SubComponentModule::class
+    SubComponentModule::class,
+    ApplicationModule::class
 ])
 interface AppComponent {
     fun inject(activity: RegistrationActivity)

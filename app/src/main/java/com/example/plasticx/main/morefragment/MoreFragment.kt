@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.plasticx.base.BaseFragment
 import com.example.plasticx.databinding.MoreFragmentBinding
+import com.example.plasticx.main.MainActivity
 import com.example.plasticx.main.morefragment.recyclersetup.InNoticeRecycler
 import com.example.plasticx.main.morefragment.recyclersetup.NoticeRecyclerAdapter
 import com.example.plasticx.room.RoomRepository
@@ -12,6 +13,7 @@ import com.example.plasticx.room.notice.NoticeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MoreFragment : BaseFragment<MoreFragmentBinding>(), InNoticeRecycler {
 
@@ -20,12 +22,12 @@ class MoreFragment : BaseFragment<MoreFragmentBinding>(), InNoticeRecycler {
     override fun getViewBinding(): MoreFragmentBinding = MoreFragmentBinding.inflate(layoutInflater)
 
     private lateinit var noticeRecyclerAdapter: NoticeRecyclerAdapter
-    private lateinit var viewModel: MoreViewModel
+    @Inject
+    lateinit var viewModel: MoreViewModel
 
     override fun setUpViews() {
         super.setUpViews()
-
-        viewModel = MoreViewModel(RoomRepository(NoticeRepository(activity?.applicationContext!!)))
+        (activity as MainActivity).mainComponent.mainComponent().create().inject(this)
 
         recyclerViewSetUp()
         viewModelSetUp()
