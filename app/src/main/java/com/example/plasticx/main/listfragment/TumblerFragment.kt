@@ -1,5 +1,6 @@
 package com.example.plasticx.main.listfragment
 
+import android.content.Intent
 import android.util.Log
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import com.example.plasticx.databinding.TumblrFragmentBinding
 import com.example.plasticx.main.MainActivity
 import com.example.plasticx.main.listfragment.RecyclerSetup.InTumblerRecycler
 import com.example.plasticx.main.listfragment.RecyclerSetup.TumblerRecyclerAdapter
+import com.example.plasticx.main.listfragment.tumblerPage.TumblerDetail
 import javax.inject.Inject
 
 
@@ -48,12 +50,15 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
                     tumblerRecyclerAdapter.submitList(it)
                     tumblerRecyclerAdapter.notifyDataSetChanged()
                 },
-                {},
+                {(activity as MainActivity).dismissLoadingAni()},
                 { (activity as MainActivity).dismissLoadingAni() }
             ).isDisposed
     }
 
     override fun onClickedItem(position: Int) {
         Log.d(TAG, "onClickedItem: ${viewModel.tumblerList[position]}")
+        val intent = Intent(activity, TumblerDetail::class.java)
+        intent.putExtra("tumblerData", viewModel.tumblerList[position])
+        startActivity(intent)
     }
 }

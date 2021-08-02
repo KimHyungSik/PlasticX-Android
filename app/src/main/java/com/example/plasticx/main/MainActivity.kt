@@ -1,8 +1,10 @@
 package com.example.plasticx.main
 
 import android.content.Intent
+import android.transition.Explode
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.navigation.fragment.NavHostFragment
@@ -45,7 +47,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
-
     }
 
     private fun setupViews() {
