@@ -42,6 +42,10 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
         loginViewModel = ViewModelProvider(this, retrofitFactory).get(LoginViewModel::class.java)
         loginViewModel._loginStatu.postValue(RESPONSE_STATE.NOTTHING)
 
+        Log.d(TAG, "setupViews: ${intent.hasExtra("registerEmail")}")
+        if(intent.hasExtra("registerEmail")) binding.loginEmailText.setText(intent.getStringExtra("registerEmail").toString())
+        if(intent.hasExtra("registerPassword")) binding.loginPasswordText.setText(intent.getStringExtra("registerPassword").toString())
+
         binding.singupBtn.setOnClickListener {
             moveIntentResult(RegistrationActivity::class.java)
         }

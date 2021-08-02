@@ -1,9 +1,14 @@
 package com.example.plasticx.main.listfragment
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.plasticx.R
 import com.example.plasticx.base.BaseFragment
 import com.example.plasticx.databinding.TumblrFragmentBinding
 import com.example.plasticx.main.MainActivity
@@ -59,6 +64,9 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
         Log.d(TAG, "onClickedItem: ${viewModel.tumblerList[position]}")
         val intent = Intent(activity, TumblerDetail::class.java)
         intent.putExtra("tumblerData", viewModel.tumblerList[position])
-        startActivity(intent)
+
+        val imageView = activity?.findViewById<View>(R.id.tumbler_list_image)
+        val options = ActivityOptions.makeSceneTransitionAnimation(activity, imageView, ViewCompat.getTransitionName(imageView!!))
+        startActivity(intent, options.toBundle())
     }
 }

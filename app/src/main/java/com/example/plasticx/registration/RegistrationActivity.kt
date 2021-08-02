@@ -1,5 +1,6 @@
 package com.example.plasticx.registration
 
+import android.content.Intent
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
 import com.example.plasticx.MyApplication
@@ -93,7 +94,13 @@ class RegistrationActivity : BaseLoginActivity<ActivityRegistrationBinding>() {
             when(it){
                 RESPONSE_STATE.OK -> {
                     setResult(RESULT_OK)
-                    finish()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.putExtra("registerEmail", binding.registrationEmail.text!!.toString())
+                    intent.putExtra("registerPassword", binding.registrationPassword.text!!.toString())
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                            Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
                 }
                 RESPONSE_STATE.FAIL -> {
                     binding.registrationEmailLayout.error = "이미 존재하는 이메일 입니다."
