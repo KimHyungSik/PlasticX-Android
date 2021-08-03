@@ -1,16 +1,18 @@
 package com.example.plasticx.main.honefragment
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.plasticx.R
 
 class ViewPagerAdapter
     (
-    var models: List<String>,
+    var models: List<Int>,
     var context: Context
 ) : RecyclerView.Adapter<ViewPagerAdapter.AdapterViewHolder>() {
     override fun getItemCount() = models.size
@@ -23,10 +25,10 @@ class ViewPagerAdapter
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
         val item = models[position]
-        holder.title.text = item
+        holder.title.setImageResource(item)
     }
 
     inner class AdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.viewpager_item_title)
+        val title: ImageView = view.findViewById(R.id.view_pager_image)
     }
 }

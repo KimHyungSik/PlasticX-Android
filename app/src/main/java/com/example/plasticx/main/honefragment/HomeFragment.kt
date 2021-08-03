@@ -1,8 +1,10 @@
 package com.example.plasticx.main.honefragment
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.plasticx.R
 import com.example.plasticx.base.BaseFragment
@@ -16,13 +18,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(){
     override fun setUpViews(){
         Log.d(TAG, "setUpViews: ")
         val viewPager = binding.homeViewPager
-        val models: MutableList<String> = mutableListOf()
+        val models: MutableList<Int> = mutableListOf()
 
         // 더미 데이터
-        models.add("")
-        models.add("")
-        models.add("")
-        models.add("")
+        models.add(R.drawable.main_logo)
+        models.add(R.drawable.logo_icon)
+        models.add(R.drawable.logo_text)
 
         val adapter = ViewPagerAdapter(models, activity?.applicationContext!!)
         viewPager.adapter = adapter
