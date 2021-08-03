@@ -38,12 +38,6 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
         binding.tumblerListView.apply {
             layoutManager = LinearLayoutManager(activity?.applicationContext)
             adapter = tumblerRecyclerAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    binding.tumblerListView.context,
-                    LinearLayoutManager(activity?.applicationContext).orientation
-                )
-            )
         }
 
         (activity as MainActivity).mainComponent.mainComponent().create().inject(this)

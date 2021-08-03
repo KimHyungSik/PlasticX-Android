@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/Notice_item_view"
+<LinearLayout android:id="@+id/Notice_item_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="62dp"
+    android:orientation="horizontal"
     android:paddingHorizontal="7dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
     >
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        app:cardBackgroundColor="#f00"
+        app:cardCornerRadius="8dp"
+        android:layout_marginLeft="6dp"
+        />
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
     <TextView
         android:id="@+id/notice_item_title"
         android:textSize="22sp"
@@ -25,5 +40,6 @@
         android:paddingStart="15dp"
         android:textColor="#000"
         />
+    </LinearLayout>
 
 </LinearLayout>
