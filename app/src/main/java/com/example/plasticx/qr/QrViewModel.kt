@@ -27,6 +27,7 @@ class QrViewModel @Inject constructor(val retrofitRepository: RetrofitRepository
                             toast("텀블러가 대여 중 입니다.")
                         }
                         else -> {
+                            toast("텀블러가 대여에 실패하였습니다.")
                             Log.d(TAG, "borrowTumbler: ErrorCode ${it.get("RESULT").asString}")
                         }
                     }

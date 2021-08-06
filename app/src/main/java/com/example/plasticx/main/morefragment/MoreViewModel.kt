@@ -7,6 +7,7 @@ import com.example.plasticx.room.RoomRepository
 import io.reactivex.Flowable
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class MoreViewModel @Inject constructor(val roomRepository: RoomRepository) : ViewModel() {
 
@@ -22,6 +23,12 @@ class MoreViewModel @Inject constructor(val roomRepository: RoomRepository) : Vi
                     .getAll()
             )
         )
+    }
+
+    suspend fun deleteNoticeItem(noticeModel: NoticeModel){
+        _loading.postValue(true)
+        roomRepository.noticeRepository.delete(noticeModel)
+        getNoticeList()
     }
 
 }

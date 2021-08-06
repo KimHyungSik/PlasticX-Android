@@ -24,6 +24,7 @@ class NoticeRecyclerHolder(itemView: View, inRecyclerView: InNoticeRecycler): Re
     }
 
     override fun onClick(v: View?) {
+        this.inRecyclerView?.onClickedItem(adapterPosition)
     }
 
     fun bindWithView(noticeModel: NoticeModel) {
