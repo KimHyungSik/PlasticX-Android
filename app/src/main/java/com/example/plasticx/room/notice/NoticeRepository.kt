@@ -21,5 +21,9 @@ class NoticeRepository(context: Context) {
         noticeNewsDao.insertNotice(noticeItem)
     }
 
+    fun update(noticeItem: NoticeModel){
+        noticeNewsDao.updateNotice(noticeItem)
+    }
+
     fun delete(noticeItem: NoticeModel) = noticeNewsDao.delete(noticeItem)
 }

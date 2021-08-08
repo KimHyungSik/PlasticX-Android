@@ -9,7 +9,7 @@ import com.example.plasticx.model.NoticeModel
 import com.example.plasticx.room.notice.NoticeDao
 import com.example.plasticx.utils.Utility.DATABASE_NAME
 
-@Database(version = 1, entities = [NoticeModel::class], exportSchema = false)
+@Database(version = 2, entities = [NoticeModel::class], exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     public abstract fun noticeDao(): NoticeDao

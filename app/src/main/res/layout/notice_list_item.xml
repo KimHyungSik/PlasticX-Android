@@ -10,11 +10,14 @@
     >
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/notice_checked"
         android:layout_width="9dp"
         android:layout_height="9dp"
         app:cardBackgroundColor="#f00"
         app:cardCornerRadius="8dp"
         android:layout_marginLeft="6dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         />
 
     <LinearLayout
@@ -29,8 +32,9 @@
         android:textStyle="bold"
         android:paddingStart="15dp"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:textColor="#000"
+        android:layout_marginBottom="8dp"
         />
 
     <TextView
@@ -38,7 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:paddingStart="15dp"
-        android:textColor="#000"
         />
     </LinearLayout>
 

@@ -38,5 +38,7 @@ class TumblerDetail : BaseActivity<ActivityTumblerDetailBinding>() {
 //        window.enterTransition = fade
 //        window.exitTransition = fade
 
+        binding.tumblerDetailBackArrow.setOnClickListener { onBackPressed() }
+
     }
 }

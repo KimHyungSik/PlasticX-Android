@@ -85,7 +85,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
         notificationManager.notify(notification_ID, builder)
         Thread {
-            val noticeModel = NoticeModel(null, title!!, msg)
+            val noticeModel = NoticeModel(null, title!!, msg, false)
             //notificationDatabase.noticeDao().insertNotice(noticeModel)
             database.noticeDao().insertNotice(noticeModel)
         }.start()

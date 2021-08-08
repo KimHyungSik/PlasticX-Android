@@ -15,18 +15,17 @@ class NoticeRecyclerAdapter(inNoticeRecycler: InNoticeRecycler):RecyclerView.Ada
         this.iRecycler = inNoticeRecycler
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeRecyclerHolder {
-        return NoticeRecyclerHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeRecyclerHolder  =
+        NoticeRecyclerHolder(
             LayoutInflater
             .from(parent.context)
             .inflate(R.layout.notice_list_item, parent,false),
             this.iRecycler!!
         )
-    }
+
 
     override fun onBindViewHolder(holder: NoticeRecyclerHolder, position: Int) {
-        val dataItem: NoticeModel = this.noticeList[position]
-        holder.bindWithView(dataItem)
+        holder.bindWithView(this.noticeList[position])
     }
 
     override fun getItemCount() = noticeList.size
