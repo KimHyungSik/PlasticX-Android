@@ -20,7 +20,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(){
         val viewPager = binding.homeViewPager
         val models: MutableList<Int> = mutableListOf()
 
-        // 더미 데이터
+        // 이미지 데이터
         models.add(R.drawable.main_logo)
         models.add(R.drawable.logo_icon)
         models.add(R.drawable.logo_text)
@@ -37,6 +37,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(){
 
         viewPager.offscreenPageLimit = 2
 
+        // 좌우 미리보기 크기
         viewPager.setPageTransformer { page, position ->
             page.translationX = position * -offsetPx
             page.scaleY = 1 - (0.25f * abs(position))

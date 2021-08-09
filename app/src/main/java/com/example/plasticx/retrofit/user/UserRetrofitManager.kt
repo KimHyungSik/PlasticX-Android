@@ -93,7 +93,7 @@ class UserRetrofitManager {
                 MyFirebaseMessagingService().getToken { token ->
                     loginUser.fcm_token = token
                     kakaoUserLogin.fcm_token = token
-                    var client =
+                    val client =
                         UserRetrofitClient.getClient(BASE_URL)?.create(InUserRetrofit::class.java)
 
                     (if (loginState == LOGIN_STATE.KAKAO) client?.userLogin(kakaoUserLogin)

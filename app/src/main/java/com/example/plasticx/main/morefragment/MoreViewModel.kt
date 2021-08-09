@@ -21,7 +21,6 @@ class MoreViewModel @Inject constructor(private val roomRepository: RoomReposito
             .noticeRepository
             .getAll()
             .let {
-                Log.d(TAG, "getNoticeList: $it")
                 _noticeList.postValue(
                     ArrayList(
                         it

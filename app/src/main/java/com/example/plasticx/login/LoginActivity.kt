@@ -43,6 +43,8 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
         loginViewModel._loginStatu.postValue(RESPONSE_STATE.NOTTHING)
 
         Log.d(TAG, "setupViews: ${intent.hasExtra("registerEmail")}")
+
+        // 회원 가입 후 회원 가입에 사용된 아이디와 비밀번호를 가져옴
         if(intent.hasExtra("registerEmail")) binding.loginEmailText.setText(intent.getStringExtra("registerEmail").toString())
         if(intent.hasExtra("registerPassword")) binding.loginPasswordText.setText(intent.getStringExtra("registerPassword").toString())
 
@@ -85,6 +87,7 @@ class LoginActivity : BaseLoginActivity<ActivityLoginBinding>() {
                     // 로그인 상태
                     var tokenID = user!!.id.toString()
                     UserManagerObject.setUpUser(tokenID, LOGIN_STATE.KAKAO)
+                    // 서버쪽 아이디와 카카오 아이디를 동일한 길이로 만듬
                     while (tokenID.length < 24) tokenID += '0'
                     loginViewModel.login(
                         tokenID,

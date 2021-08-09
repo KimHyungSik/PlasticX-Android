@@ -23,18 +23,9 @@ class TumblerDetail : BaseActivity<ActivityTumblerDetailBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun setup() {
-        val tumblerItem:TumblerItem = intent.getSerializableExtra("tumblerData") as TumblerItem
-
-        Log.d(TAG, "onCreate: $tumblerItem")
+        val tumblerItem: TumblerItem = intent.getSerializableExtra("tumblerData") as TumblerItem
 
         binding.tumblerItem = tumblerItem
-
-//        val fade = Fade()
-//        fade.excludeTarget(android.R.id.statusBarBackground, true)
-//        fade.excludeTarget(android.R.id.navigationBarBackground, true)
-//
-//        window.enterTransition = fade
-//        window.exitTransition = fade
 
         binding.tumblerDetailBackArrow.setOnClickListener { onBackPressed() }
 

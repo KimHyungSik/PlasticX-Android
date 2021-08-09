@@ -25,11 +25,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
     override fun setUpViews() {
         Log.d(TAG, "setUpViews: ")
 
-        val profileSubject : PublishSubject<ProfileModel> = PublishSubject.create()
         val profileModel = ProfileModel("님", "0원")
-        profileSubject.subscribe {
-            binding.profileModel = it
-        }
 
         // 카카오 정보로 프로필 생성
         if (UserManagerObject.loginState == LOGIN_STATE.KAKAO) {
@@ -48,30 +44,31 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                         .subscribe {
                             val body = it.asJsonObject
                             profileModel.deposit = body.get("deposit").asString + "원"
-                            profileSubject.onNext(profileModel)
+                            binding.profileModel = profileModel
                         }.isDisposed
                 }
             }
-        }else{
-          RetrofitRepository().getUserRxInfo(UserManagerObject.userId)
-              .subscribe {
-                  val body = it.asJsonObject
-                  profileModel.name = body.get("name").asString + " 님"
-                  profileModel.deposit = body.get("deposit").asString + "원"
-                  profileSubject.onNext(profileModel)
-              }.isDisposed
+        } else {
+            RetrofitRepository().getUserRxInfo(UserManagerObject.userId)
+                .subscribe {
+                    val body = it.asJsonObject
+                    profileModel.name = body.get("name").asString + " 님"
+                    profileModel.deposit = body.get("deposit").asString + "원"
+                    binding.profileModel = profileModel
+                }.isDisposed
         }
 
         binding.logOutView.setOnClickListener {
-            if (UserManagerObject.loginState == LOGIN_STATE.KAKAO)
-            // 카카오 로그아웃
+            if (UserManagerObject.loginState == LOGIN_STATE.KAKAO) {
+                // 카카오 로그아웃
                 UserApiClient.instance.logout { error ->
                     if (error != null) {
                         Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
                     } else {
                         logOut()
                     }
-                } else if (UserManagerObject.loginState == LOGIN_STATE.LOCAL) {
+                }
+            } else if (UserManagerObject.loginState == LOGIN_STATE.LOCAL) {
                 logOut()
             }
         }

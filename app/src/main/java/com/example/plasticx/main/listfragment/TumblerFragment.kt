@@ -32,7 +32,6 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
 
     override fun setUpViews() {
         super.setUpViews()
-        Log.d(TAG, "setUpViews: ")
         tumblerRecyclerAdapter = TumblerRecyclerAdapter(this)
 
         binding.tumblerListView.apply {
@@ -55,7 +54,6 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
     }
 
     override fun onClickedItem(position: Int) {
-        Log.d(TAG, "onClickedItem: ${viewModel.tumblerList[position]}")
         val intent = Intent(activity, TumblerDetail::class.java)
         intent.putExtra("tumblerData", viewModel.tumblerList[position])
 
