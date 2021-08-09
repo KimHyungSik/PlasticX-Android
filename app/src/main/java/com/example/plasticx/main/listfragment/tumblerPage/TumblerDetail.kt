@@ -27,9 +27,7 @@ class TumblerDetail : BaseActivity<ActivityTumblerDetailBinding>() {
 
         Log.d(TAG, "onCreate: $tumblerItem")
 
-        binding.tumblerDetailName.text = tumblerItem.tumblerName
-        binding.tumblerDetailDate.text = "기간 : " + tumblerItem.tumblerStartDay + " ~ " + tumblerItem.tumblerEndDay
-        binding.tumblerDetailFrom.text = "대여 장소 : " +  tumblerItem. tumblerFrom
+        binding.tumblerItem = tumblerItem
 
 //        val fade = Fade()
 //        fade.excludeTarget(android.R.id.statusBarBackground, true)

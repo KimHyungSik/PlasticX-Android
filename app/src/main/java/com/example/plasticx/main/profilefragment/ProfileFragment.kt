@@ -1,5 +1,6 @@
 package com.example.plasticx.main.profilefragment
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.plasticx.R
@@ -13,16 +14,22 @@ import com.example.plasticx.utils.LOGIN_STATE
 import com.example.plasticx.utils.PreferencesManager
 import com.example.plasticx.utils.Utility.USER_ID_KEY
 import com.kakao.sdk.user.UserApiClient
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 
 class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
     private val TAG = "ProfileFragment - 로그"
     override fun getViewBinding(): ProfileFragmentBinding =
         ProfileFragmentBinding.inflate(layoutInflater)
 
+    @SuppressLint("CheckResult")
     override fun setUpViews() {
         Log.d(TAG, "setUpViews: ")
+
+        val profileSubject : PublishSubject<ProfileModel> = PublishSubject.create()
+        val profileModel = ProfileModel("님", "0원")
+        profileSubject.subscribe {
+            binding.profileModel = it
+        }
 
         // 카카오 정보로 프로필 생성
         if (UserManagerObject.loginState == LOGIN_STATE.KAKAO) {
@@ -30,7 +37,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                 if (error != null) {
                     Log.e(TAG, "사용자 정보 요청 실패", error)
                 } else if (user != null) {
-                    binding.userName.text = user.kakaoAccount?.profile?.nickname + " 님"
+                    profileModel.name = user.kakaoAccount?.profile?.nickname + " 님"
                     Glide
                         .with(activity?.applicationContext!!)
                         .load(user.kakaoAccount?.profile?.thumbnailImageUrl)
@@ -40,7 +47,8 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                     RetrofitRepository().getUserRxInfo(UserManagerObject.userId)
                         .subscribe {
                             val body = it.asJsonObject
-                            binding.userDeposit.text = body.get("deposit").asString + "원"
+                            profileModel.deposit = body.get("deposit").asString + "원"
+                            profileSubject.onNext(profileModel)
                         }.isDisposed
                 }
             }
@@ -48,8 +56,9 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
           RetrofitRepository().getUserRxInfo(UserManagerObject.userId)
               .subscribe {
                   val body = it.asJsonObject
-                  binding.userName.text = body.get("name").asString + " 님"
-                  binding.userDeposit.text = body.get("deposit").asString + "원"
+                  profileModel.name = body.get("name").asString + " 님"
+                  profileModel.deposit = body.get("deposit").asString + "원"
+                  profileSubject.onNext(profileModel)
               }.isDisposed
         }
 
@@ -66,6 +75,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
                 logOut()
             }
         }
+
     }
 
     private fun logOut() {
