@@ -26,6 +26,7 @@ class ProfileFragment : BaseFragment<ProfileFragmentBinding>() {
         Log.d(TAG, "setUpViews: ")
 
         val profileModel = ProfileModel("님", "0원")
+        binding.profileModel = profileModel
 
         // 카카오 정보로 프로필 생성
         if (UserManagerObject.loginState == LOGIN_STATE.KAKAO) {

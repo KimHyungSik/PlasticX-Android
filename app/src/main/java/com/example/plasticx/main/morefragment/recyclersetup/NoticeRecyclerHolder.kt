@@ -36,7 +36,7 @@ class NoticeRecyclerHolder(itemView: View, inRecyclerView: InNoticeRecycler): Re
         if(noticeModel.checked){
             noticeChecked.setCardBackgroundColor(Color.WHITE)
         }else{
-            noticeChecked.setCardBackgroundColor(Color.RED)
+            noticeChecked.setCardBackgroundColor(Color.rgb(255, 0, 0))
         }
     }
 

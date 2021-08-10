@@ -1,6 +1,7 @@
 package com.example.plasticx.main.listfragment.tumblerPage
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.transition.Fade
 import android.util.Log
@@ -26,6 +27,12 @@ class TumblerDetail : BaseActivity<ActivityTumblerDetailBinding>() {
         val tumblerItem: TumblerItem = intent.getSerializableExtra("tumblerData") as TumblerItem
 
         binding.tumblerItem = tumblerItem
+
+        if(!tumblerItem.status){
+            binding.tumblerDetailBorrowStatus.text = "반납완료"
+            binding.tumblerDetailBorrowStatusLayout.setCardBackgroundColor(Color.rgb(70, 58, 62))
+            binding.tumblerDetailBorrowStatusLayout.setCardBackgroundColor(Color.rgb(204,204,204))
+        }
 
         binding.tumblerDetailBackArrow.setOnClickListener { onBackPressed() }
 

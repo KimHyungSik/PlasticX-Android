@@ -29,7 +29,6 @@ interface InUserRetrofit {
         @Body body: KakaoLoginUser
     ): Call<JsonElement>
 
-
     @Headers("Content-Type: application/json")
     @GET("api/user/info/{user_id}")
     fun userInfo(
@@ -39,6 +38,12 @@ interface InUserRetrofit {
     @Headers("Content-Type: application/json")
     @GET("api/user/list/{user_id}")
     fun userTumblerList(
+        @Path("user_id") userId: String
+    ): Observable<JsonElement>
+
+    @Headers("Content-Type: application/json")
+    @GET("api/user/history/{user_id}")
+    fun userTumblerHistoryList(
         @Path("user_id") userId: String
     ): Observable<JsonElement>
 }

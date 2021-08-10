@@ -18,45 +18,54 @@ import kotlin.collections.ArrayList
 class TumblerViewModel @Inject constructor(val retrofitRepository: RetrofitRepository) {
 
     val TAG = "TumblerViewModel - 로그"
-    @SuppressLint("SimpleDateFormat")
-    val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
     var tumblerList = ArrayList<TumblerItem>()
+    
     fun getTumblerList(): Observable<ArrayList<TumblerItem>> = retrofitRepository
         .getUserTumblerList(UserManagerObject.userId)
         .map { it.asJsonObject }
         .map {
+            var _tumblerList = ArrayList<TumblerItem>()
             for (n in it.get("tumblers").asJsonArray) {
                 val jsonObject = n.asJsonObject
-
-                var date = apiDateFormat.parse(jsonObject.get("borrowed_date").asString)
-
-                val startDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format(
-                    "dd",
-                    date
-                ).toString()
-
-                val c = Calendar.getInstance()
-                c.time = date!!
-                c.add(Calendar.DATE, 7)
-                date =  c.time
-
-                val endDay = DateFormat.format("M", date).toString() + '.' + DateFormat.format(
-                    "dd",
-                    date
-                ).toString()
 
                 val tumblerItem = TumblerItem(
                     "",
                     jsonObject.get("model").asString,
-                    startDay,
-                    endDay,
-                    jsonObject.get("shop").asString
+                    jsonObject.get("borrowed_date").asString,
+                    jsonObject.get("usable_period_date").asString,
+                    jsonObject.get("shop").asString,
+                    true
                 )
 
-                tumblerList.add(tumblerItem)
+                _tumblerList.add(tumblerItem)
             }
-            tumblerList
+            _tumblerList
         }
+
+    fun getTumblerHistoryList(): Observable<ArrayList<TumblerItem>> =
+        retrofitRepository
+            .getUserTumblerHistoryList(UserManagerObject.userId)
+            .map { it.asJsonObject }
+            .map {
+                val _tumblerList = ArrayList<TumblerItem>()
+                for (n in it.get("tumblers_returned").asJsonArray) {
+                    val jsonObject = n.asJsonObject
+
+                    Log.d(TAG, "getTumblerHistoryList: $jsonObject")
+
+                    val tumblerItem = TumblerItem(
+                        "",
+                        jsonObject.get("model").asString,
+                        "",
+                        jsonObject.get("returned_date").asString,
+                        jsonObject.get("shop").asString,
+                        false
+                    )
+
+                    _tumblerList.add(tumblerItem)
+                }
+                _tumblerList
+            }
 
 }

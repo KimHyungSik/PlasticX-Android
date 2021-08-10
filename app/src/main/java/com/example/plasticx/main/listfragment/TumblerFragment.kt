@@ -4,9 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.plasticx.R
 import com.example.plasticx.base.BaseFragment
@@ -15,6 +13,7 @@ import com.example.plasticx.main.MainActivity
 import com.example.plasticx.main.listfragment.RecyclerSetup.InTumblerRecycler
 import com.example.plasticx.main.listfragment.RecyclerSetup.TumblerRecyclerAdapter
 import com.example.plasticx.main.listfragment.tumblerPage.TumblerDetail
+import io.reactivex.Observable
 import javax.inject.Inject
 
 
@@ -42,14 +41,18 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
         (activity as MainActivity).mainComponent.mainComponent().create().inject(this)
 
         (activity as MainActivity).showLoadingAni()
-        viewModel.getTumblerList()
+
+        Observable.concat(viewModel.getTumblerList(), viewModel.getTumblerHistoryList())
             .subscribe(
                 {
-                    tumblerRecyclerAdapter.submitList(it)
+                    viewModel.tumblerList.addAll(it)
+                    tumblerRecyclerAdapter.submitList(viewModel.tumblerList)
                     tumblerRecyclerAdapter.notifyDataSetChanged()
                 },
-                {(activity as MainActivity).dismissLoadingAni()},
-                { (activity as MainActivity).dismissLoadingAni() }
+                {},
+                {
+                    (activity as MainActivity).dismissLoadingAni()
+                }
             ).isDisposed
     }
 
@@ -58,7 +61,11 @@ class TumblerFragment : BaseFragment<TumblrFragmentBinding>(), InTumblerRecycler
         intent.putExtra("tumblerData", viewModel.tumblerList[position])
 
         val imageView = activity?.findViewById<View>(R.id.tumbler_list_image)
-        val options = ActivityOptions.makeSceneTransitionAnimation(activity, imageView, ViewCompat.getTransitionName(imageView!!))
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+            activity,
+            imageView,
+            ViewCompat.getTransitionName(imageView!!)
+        )
         startActivity(intent, options.toBundle())
     }
 }

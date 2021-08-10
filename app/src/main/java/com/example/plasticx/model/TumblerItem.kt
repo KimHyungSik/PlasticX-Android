@@ -7,5 +7,6 @@ data class TumblerItem(
     val tumblerName : String,
     val tumblerStartDay : String,
     val tumblerEndDay : String,
-    val tumblerFrom : String?
+    val tumblerFrom : String?,
+    val status : Boolean
 ):Serializable

@@ -67,6 +67,13 @@ class RetrofitRepository {
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
 
+    fun getUserTumblerHistoryList(userId: String) : Observable<JsonElement> =
+        retrofitBase
+            .create(InUserRetrofit::class.java)
+            .userTumblerHistoryList(userId)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+
 
     fun borrowTumblerRx(tumblerId: String): Flowable<JsonElement> =
         retrofitBase
