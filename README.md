@@ -1,6 +1,27 @@
 PlasticX
 ------------------------
 ## 일회용 컵 사용을 줄이기 위한 텀블러 공유 및 관리 프로젝트
+## `Android`
+
+## Development
+-------------------
+- IDE : Android Studio (4.1.3)
+- JDK : Java 11을 실행할 수 있는 JDK
+- Language : Kotlin (1.4.32)
+
+#### Libraries
+- AndroidX
+  - Fragment
+  - Navigtion 
+  - ViewModel
+  - LiveData
+  - Room
+  - RecyclerView
+- Dagger
+- Coroutine
+- Rxjava, RxAndroid
+- Retrofit
+- Code scanner
 
 Video
 -------------------
