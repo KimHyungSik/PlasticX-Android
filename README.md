@@ -5,7 +5,7 @@ PlasticX
 
 ## Development
 - IDE : Android Studio (4.1.3)
-- JDK : Java 11을 실행할 수 있는 JDK
+- JDK : Java (16)
 - Language : Kotlin (1.4.32)
 
 #### Libraries
