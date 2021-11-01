@@ -14,6 +14,51 @@
       },
       "oauth_client": [
         {
+          "client_id": "81183687067-dcek2c1ias71l609kn2ddvvmimb01uc8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plasticx",
+            "certificate_hash": "e146a77c9aacc4e2f507f54e5cb907b41a1826d8"
+          }
+        },
+        {
+          "client_id": "81183687067-ld69lf176rgdqpinan8iku9i0b26d59f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfbBLi114LVRQh9GmW-niuVAoRJc-9bhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81183687067-ld69lf176rgdqpinan8iku9i0b26d59f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81183687067:android:1744011c444da2f01be13e",
+        "android_client_info": {
+          "package_name": "com.plasticxv.plasticx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81183687067-01mqst8pd4rnkjtlad6f4ss5vl6ecg3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plasticxv.plasticx",
+            "certificate_hash": "e146a77c9aacc4e2f507f54e5cb907b41a1826d8"
+          }
+        },
+        {
           "client_id": "81183687067-ld69lf176rgdqpinan8iku9i0b26d59f.apps.googleusercontent.com",
           "client_type": 3
         }

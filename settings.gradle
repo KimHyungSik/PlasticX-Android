@@ -1,2 +1,4 @@
+include ':shared'
+include ':features'
 include ':app'
 rootProject.name = "PlasticX"
